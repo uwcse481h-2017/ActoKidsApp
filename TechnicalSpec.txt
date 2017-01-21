@@ -1,0 +1,66 @@
+The end product will assist with a few specific tasks. First and foremost, it will help parents in finding accessible activities nearby 
+that are accessible to their child’s specific disability and interests. Second, it will allow organizations who put on accessible events 
+to advertise directly to their target audience. Third, it will allow parents to rate and comment on activities based on their experience 
+and how accessible the event was for their family. Our goals include creating a platform on which people can search and find activities, 
+and a way for organizations to advertise activities. 
+
+An activity this will assist in is allowing the parent of a child with disabilities to search on an app to find an activity that suits 
+their child’s abilities and interests. This first involves downloading the app or going to the website. This will render the home page 
+which contains the normal search page with event summaries. Then the parent can open the event filters to select what kind of activity 
+they want to do, the date they want to do it, the abilities the event caters to, the age range the event caters to, and other 
+characteristics. Then they will be taken back to the search page where the activities that meet their desires will be displayed for the 
+parents to scroll through. Then it’s up to the parent to select an activity, add it to their “Favorites” so they can find it again later, 
+formally register for the event (if it’s required) and attend the event. Then, after the event, the parent will be able to leave comments
+or rating to allow other people to have more information on the organization/event in the future.
+
+This will also assist with allowing people to advertise their or their organization’s event. There will be an in-app form for the 
+organizer to fill out that will add the activity directly to the database. The organizer simply needs to open that form, fill out the 
+information required, and click submit. Certain events and event information can be stripped directly from Facebook pages of 
+organizations that put on many relevant events. 
+
+The user needs to open and interact with the app. The organizations that want to advertise need to enter their event information directly 
+to the app, or enter Facebook events on their organization’s page.
+
+The technology needs to collect data by using a Facebook event scraper from known pages that have accessible activities. It also needs to 
+collect data from the in-app event input form. Each event will be saved in a database and ordered by the date of the event. For recurring
+events, it must store each instance of the activity as its own event.  The app must also provide an interface for users to search the data
+as described--sorting by disability, age, event type, and store user information so as to allow users to save events to their Favorites. 
+
+Finding an event to participate in will be done (mostly) by an abled caretaker. Posting some of the events will be done by the event 
+organizer. Rating the event will be done by the caretakers. The app users must be able to read and interact with a smartphone or 
+computer. 
+
+To get started, the user will download app or open the website. They can then perform the task of searching, inputting an event, or 
+rating an activity anywhere that has internet access for the user’s smartphone or computer. The task can be performed as often as the 
+user wants and the only resource constraint is that they must have access to the internet and a smartphone or computer. 
+
+There are a few things that can go wrong. Most importantly, an event could be canceled or details changed without that change being 
+updated on the app. Furthermore, an event could be displayed as accessible to a certain group but not actually be accessible in reality.  
+
+The user interface for this app has mostly been determined by the HCDE members of the ActoKids team. They have designed a prototype 
+that has been user tested already. It includes a normal search page, a map search page, a calendar search page and a favorites page, as 
+well as an activity details pages for each event. 
+
+To collect data, we will need to scrape Facebook pages for events and put them into database. We also must create form input for event 
+right into the database. This form will have some required information and some optional information. We will use structured database, 
+and will need to create a database for production and a database for testing. To make the user interface and display data, we will need 
+to choose a method to build a cross platform app and implement the interface developed by the HCDE team. 
+
+For our project, we will be focusing on implementing the database. First we will figure out how to manage the database. We need to 
+determine what fields we are going to collect and what types will they be. We need to create a good database design and decide what 
+database and servers to use. This will likely take us one week.  After the database has been designed, we will need to implement the 
+database. This includes setting up the database on the server. We expect this portion to take about two weeks. We will then set up an 
+event scraper to get information from Facebook for events, and start using it to gather data which we expect will take approximately 
+a week. This will be challenging because Facebook does not collect data about age range or accessibility so classifying the events will 
+be difficult. 
+
+The following are the next steps we would take to finish building the app. First, we’d create a script to run the event scraper and set 
+it up on a service to run every two hours or so to update the information. Then we would learn React to build native apps for iOS and 
+Android. We would first implement the event searching and filtering interface designed by the ActoKids team.  We would then create the 
+Activity Details interface designed by the team. After those basic functions were implemented, we would expand the number of events in 
+our database by creating an in-app form for adding in new event information and implementing Google Calendar event scraping. Following 
+that, we would personalize the experience by creating a way to log-in with Facebook or Google+ and add in the ability to “Favorite” an 
+event. Then we’d add in the calendar search page that the ActoKids team designed. Following that, we would add in the ability to comment
+or rate an event or organization. Finally, we would add in the map search page that the ActoKids team designed. 
+
+
