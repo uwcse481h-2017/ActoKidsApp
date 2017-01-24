@@ -64,3 +64,44 @@ event. Then we’d add in the calendar search page that the ActoKids team design
 or rate an event or organization. Finally, we would add in the map search page that the ActoKids team designed. 
 
 
+Tasks: 
+
+Registration										5 hours 	
+		Register with Facebook
+
+Enter event										10 hours
+            	Enter event, populate spreadsheet, merge data into database, provide user with update key 
+
+Update/delete event									8 hours
+		Enter update key, retrieve event information, user edits information, populate a spreadsheet, replace current event with updated event. 
+
+Display events										20 hours
+            	Initially display all events happening around me. Filter list of activities with: Checkboxes for activity types, Checkboxes for disability types, checkboxes for frequency, checkboxes for day of week, checkboxes for time of day, slider for cost, slider for distance. Also have search bar for key words.
+
+Rate activity										8 hours
+		Enter comment using Facebook API, populate spreadsheet, store it in comments table in database
+
+Updates/delete rate									
+		Update and delete rates will done through Facebook API
+
+
+		
+By Friday 1/27: 
+Basic database design of what fields we want for the event data for events and separate database for comments 
+Start learning React 
+	
+By Friday 2 / 3:
+Implement log-in
+Start a local database--postgres 
+Start event scrapper
+Basic app that you can log in to
+	
+By Friday 2 / 10:
+Enter event on app and store into database
+Event scraper works
+	
+By Friday 2/17
+Search for events and filter by different things 
+Add Facebook comments API
+
+
