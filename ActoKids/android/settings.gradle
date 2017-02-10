@@ -1,0 +1,3 @@
+rootProject.name = 'ActoKids'
+
+include ':app'
