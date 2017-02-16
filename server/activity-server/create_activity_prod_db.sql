@@ -28,7 +28,7 @@ CREATE TABLE activity_test (
     parent_participation_required BOOLEAN NOT NULL,
     assistant_provided BOOLEAN NOT NULL,
     disability_restrooms_available BOOLEAN NOT NULL,
-    equipment_provided TEXT[],
+    equipment_provided TEXT,
     sibling_participation BOOLEAN,
     kids_to_staff_ratio REAL,
     asl_interpreter_available BOOLEAN,
@@ -46,4 +46,14 @@ closed_circuit_heering_loop_available, additional_charge, accomodate_service_ani
 onsite_childcare) values('Fun Activity', cast('2017-02-24' as date), numrange(12.0, 15.0), money(21.50), 
 '1234 Random Street', 'Seattle', 'WA', 'United States', 98105, 'An activity created for testing purpose only',
 true, 'Zoo'::activity_options, 'Mobility'::disability_options, int4range(5,10), false, true, false,
-ARRAY['equp 1', 'equip 2'], false, 3.0, true, false, false, true, false);
+'equp 1', false, 3.0, true, false, false, true, false);
+
+INSERT INTO activity_test(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code,
+descriptions, wheelchair_accessible, activity_type, disability_type, age_range,
+parent_participation_required, assistant_provided, disability_restrooms_available,
+equipment_provided, sibling_participation, kids_to_staff_ratio, asl_interpreter_available,
+closed_circuit_heering_loop_available, additional_charge, accomodate_service_animals,
+onsite_childcare) values('random_activity', '2017-02-27'::date, numrange('(10.5,16.75)'), money('10.5'),
+'5613_Random_Street', 'Seattle', 'WA', 'US', '98105'::integer,'only_for_testing_purpose',
+'true'::bool, 'Zoo'::activity_options, 'Mobility'::disability_options, '(4,11)'::int4range, 'false'::bool, 'true'::bool, 'true'::bool,
+'abc', 'true'::bool, '1.5'::real, 'false'::bool, 'false'::bool, 'false'::bool, 'true'::bool, 'false'::bool);

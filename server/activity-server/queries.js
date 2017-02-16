@@ -67,17 +67,17 @@ function getAllActivities(req, res, next) {
 //
 // create a new activity
 function createNewActivity(req, res, next) {
-  db.none('insert into '+ settings.activity_test_database
-  + 'activity_test(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code,'
-  +'descriptions, wheelchair_accessible, activity_type, disability_type, age_range,'
-  +'parent_participation_required, assistant_provided, disability_restrooms_available,'
-  +'equipment_provided, sibling_participation, kids_to_staff_ratio, asl_interpreter_available,'
-  +'closed_circuit_heering_loop_available, additional_charge, accomodate_service_animals,'
-  +'onsite_childcare)'
-  + ' values(${activity_name}, cast(${date} as date), ${time_of_day}::numrange, money(${cost}), ${street_name}, ${city}, ${state}'
+  db.none('INSERT INTO '+ settings.activity_test_database
+  + '(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code,'
+  + 'descriptions, wheelchair_accessible, activity_type, disability_type, age_range,'
+  + 'parent_participation_required, assistant_provided, disability_restrooms_available,'
+  + 'equipment_provided, sibling_participation, kids_to_staff_ratio, asl_interpreter_available,'
+  + 'closed_circuit_heering_loop_available, additional_charge, accomodate_service_animals,'
+  + 'onsite_childcare)'
+  + ' values(${activity_name}, ${dates}::date, numrange(${time_of_day}), money(${cost}), ${street_name}, ${city}, ${state}'
   + ', ${country}, ${zip_code}::integer, ${descriptions}, ${wheelchair_accessible}::bool, ${activity_type}::activity_options'
   + ', ${disability_type}::disability_options, ${age_range}::int4range, ${parent_participation_required}::bool, ${assistant_provided}::bool'
-  + ', ${disability_restrooms_available}::bool, ARRAY[${equipment_provided}], ${sibling_participation}::bool'
+  + ', ${disability_restrooms_available}::bool, ${equipment_provided}, ${sibling_participation}::bool'
   + ', ${kids_to_staff_ratio}::real, ${asl_interpreter_available}::bool, ${closed_circuit_heering_loop_available}::bool'
   + ', ${additional_charge}::bool, ${accomodate_service_animals}::bool, ${onsite_childcare}::bool)', req.body)
     .then(function () {
@@ -88,6 +88,7 @@ function createNewActivity(req, res, next) {
         });
     })
     .catch(function (err) {
+      console.log(req.body);
       return next(err);
     });
 }
