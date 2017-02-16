@@ -59,13 +59,13 @@ toggleDisability(disability, index, checked) {
   render() {
     return (
       <ScrollView>
-        <Text>
+        <Text style={styles.text}>
           Welcome to ActoKids!
         </Text>
         <Text>
           * required fields
         </Text>
-        <Text>
+        <Text style={styles.text}>
           *Activity Name:
         </Text>
         <TextInput
@@ -73,7 +73,7 @@ toggleDisability(disability, index, checked) {
           placeholder="Activity name..."
           onChangeText={(ActivityName) => this.setState({ ActivityName })}
           />
-        <Text>
+        <Text style={styles.text}>
           *Activity Date: 
         </Text>
         <TextInput
@@ -81,7 +81,7 @@ toggleDisability(disability, index, checked) {
           placeholder="mm/dd/yyyy"
           onChangeText={(date) => this.setState({ date })}
           />
-          <Text>
+        <Text style={styles.text}>
           *Frequency: 
         </Text>
          <CheckBox
@@ -96,7 +96,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={'Recurring'}
         />
-        <Text>
+        <Text style={styles.text}>
           *Time:
         </Text> 
         <TextInput
@@ -104,7 +104,7 @@ toggleDisability(disability, index, checked) {
           placeholder="hh:mm-hh:mm"
           onChangeText={(time) => this.setState({ time })}
           />
-        <Text>
+        <Text style={styles.text}>
           *Cost:  $
         </Text> 
         <TextInput
@@ -112,7 +112,7 @@ toggleDisability(disability, index, checked) {
           placeholder=""
           onChangeText={(cost) => this.setState({ cost })}
           />
-        <Text>
+        <Text style={styles.text}>
           *Location: 
         </Text> 
         <TextInput
@@ -130,7 +130,7 @@ toggleDisability(disability, index, checked) {
           placeholder="state"
           onChangeText={(state) => this.setState({ state })}
           />
-        <Text>
+        <Text style={styles.text}>
           *Description: 
         </Text> 
         <TextInput
@@ -138,7 +138,7 @@ toggleDisability(disability, index, checked) {
           placeholder="description"
           onChangeText={(description) => this.setState({ description })}
           />
-        <Text>
+        <Text style={styles.text}>
           *Wheelchair Accessible: 
         </Text> 
         <CheckBox
@@ -147,7 +147,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={''}
         />
-        <Text>
+        <Text style={styles.text}>
           *Wheelchair Accessible Restroom: 
         </Text>
         <CheckBox
@@ -156,7 +156,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={''}       
         />
-        <Text>
+        <Text style={styles.text}>
           *Activity Type: 
         </Text> 
         <CheckBox
@@ -187,7 +187,7 @@ toggleDisability(disability, index, checked) {
           style={{flex: 1, padding: 10}}
           onClick={(checked) => { (this.toggleActivity('art', this.state.activity_type.indexOf('art'), checked));  }}
           isChecked={false}
-          leftText={'art'}
+          leftText={'Art'}
         />
          <CheckBox
           style={{flex: 1, padding: 10}}
@@ -207,7 +207,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={'Other'}
         />
-        <Text>
+        <Text style={styles.text}>
           *Disability Type: 
         </Text> 
         <CheckBox
@@ -240,7 +240,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={'Sensory'}
         />
-        <Text>
+        <Text style={styles.text}>
           *Age range: 
         </Text> 
         <TextInput
@@ -248,7 +248,7 @@ toggleDisability(disability, index, checked) {
           placeholder="youngest-oldest"
           onChangeText={(age_range) => this.setState({age_range })}
           />
-        <Text>
+        <Text style={styles.text}>
           *Parent participation required: 
         </Text> 
         <CheckBox
@@ -257,7 +257,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={''}
         />
-        <Text>
+        <Text style={styles.text}>
           *Assistant Provided: 
         </Text>
         <CheckBox
@@ -266,7 +266,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={''}
         />
-         <Text>
+        <Text style={styles.text}>
           Equipment provided: 
         </Text> 
         <TextInput
@@ -274,7 +274,7 @@ toggleDisability(disability, index, checked) {
           placeholder="List all equipment provided by your organization"
           onChangeText={(equipment_provided) => this.setState({equipment_provided })}
           />
-        <Text>
+        <Text style={styles.text}>
           Sibling participation allowed: 
         </Text> 
         <CheckBox
@@ -283,7 +283,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={''}
         />
-        <Text>
+        <Text style={styles.text}>
           Kids to staff ratio: 
         </Text> 
         <TextInput
@@ -291,7 +291,7 @@ toggleDisability(disability, index, checked) {
           placeholder="kids : staff"
           onChangeText={(kids_to_staff) => this.setState({kids_to_staff })}
           />
-         <Text>
+        <Text style={styles.text}>
           ASL Interpreter available:  
         </Text> 
         <CheckBox
@@ -300,7 +300,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={''}
         />
-        <Text>
+        <Text style={styles.text}>
           Closed circuit hearing loop:
         </Text>
         <CheckBox
@@ -309,7 +309,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={''}
         /> 
-        <Text>
+        <Text style={styles.text}>
           Additional charge for personal care attendant:
         </Text>
         <CheckBox
@@ -318,7 +318,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={''}
         />
-         <Text>
+        <Text style={styles.text}>
           Can accomodate service animals:
         </Text> 
         <CheckBox
@@ -327,7 +327,7 @@ toggleDisability(disability, index, checked) {
           isChecked={false}
           leftText={''}
         />
-        <Text>
+        <Text style={styles.text}>
           Childcare onsite:  
         </Text>
         <CheckBox
@@ -353,6 +353,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  text: { 
+    fontSize: 20,
+    color: 'purple',
+
   }
 });
 

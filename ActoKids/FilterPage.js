@@ -87,7 +87,7 @@ removeDisability(disability, index, checked) {
     return (   
       <View>  
       <ScrollView>
-        <Text>
+        <Text style={styles.header}>
           Welcome to ActoKids!
         </Text>
         <Text style={ styles.header }>
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   header: { 
-    fontSize: 18,
+    fontSize: 20,
     color: 'purple',
   }
 });
