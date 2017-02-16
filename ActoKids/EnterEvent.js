@@ -26,36 +26,77 @@ export default class EnterEvent extends Component {
     super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      id: 1, ActivityName: '', date: '', frequency: '', time: '', cost: '', description: '', street_address: '', city: '', state: '', wheelchair_accessible: false,
+      id: 1, ActivityName: '', date: '', frequency: '', time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: false,
       wheelchair_accessible_restroom: false, activity_type: [], disability_types: [], age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
       sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false
     }
 
   }
 
-toggleActivity(activity, index, checked) {
-  if(checked) { 
-     this.state.activity_type.append(activity)
-  } else{
-   this.setState({
-     data: this.state.activity_type.filter((_, i) => i !== index)
-   });
+  toggleActivity(activity, index, checked) {
+    if(checked) { 
+       this.state.activity_type.append(activity)
+    } else{
+     this.setState({
+       data: this.state.activity_type.filter((_, i) => i !== index)
+     });
+    }
   }
-}
 
-toggleDisability(disability, index, checked) {
-  if(checked) { 
-     this.state.disability_type.append(disability)
-  } else{
-    this.setState({
-      data: this.state.disability_type.filter((_, i) => i !== index)
-    });
+  toggleDisability(disability, index, checked) {
+    if(checked) { 
+       this.state.disability_type.append(disability)
+    } else{
+      this.setState({
+        data: this.state.disability_type.filter((_, i) => i !== index)
+      });
+    }
   }
-}
+
+  onSubmitButtonPressed() {
+    var body = JSON.stringify({
+        activity_name: this.state.ActivityName,
+        dates: this.state.date,
+        time_of_day: this.state.time,
+        cost: this.state.cost,
+        street_name: this.state.street_address,
+        city: this.state.city,
+        state: this.state.state,
+        country: this.state.country, 
+        zip_code: this.state.zip_code,
+        descriptions: this.state.description,
+        wheelchair_accessible: this.state.wheelchair_accessible,
+        activity_type: this.state.activity_type,
+        disability_type: this.state.disability_types,
+        age_range: this.state.age_range,
+        parent_participation_required: this.state.parent_participation,
+        assistant_provided: this.state.assistant,
+        disability_restrooms_available: this.state.wheelchair_accessible_restroom,
+        equipment_provided: this.state.equipment_provided,
+        sibling_participation: this.state.sibling,
+        kids_to_staff_ratio: this.state.kids_to_staff,
+        asl_interpreter_available: this.state.asl,
+        closed_circuit_heering_loop_available: this.state.closed_circuit,
+        additional_charge: this.state.add_charge,
+        accomodate_service_animals: this.state.animals,
+        onsite_childcare: this.state.chldcare})
+    fetch('http://10.0.2.2:3000/api/activities/createNewActivity', {
+        method: "POST",
+        body: body
+      })
+      // .then( (res)=> res.json() )
+      // .then( (resData) => {
+      //   console.log("Response Body -> " + JSON.stringify(resData.body) );
+      // } )
+      .done();
+
+      this._navigate()
+  }
 
    _navigate (){
-  this.props.navigator.push({title: 'Home Screen', index: 0})
-}
+    this.props.navigator.push({title: 'Home Screen', index: 0})
+  }
+
   render() {
     return (
       <ScrollView>
@@ -101,7 +142,7 @@ toggleDisability(disability, index, checked) {
         </Text> 
         <TextInput
           style={{ height: 40, width: 200 }}
-          placeholder="hh:mm-hh:mm"
+          placeholder="(hh.mm,hh.mm)"
           onChangeText={(time) => this.setState({ time })}
           />
         <Text style={styles.text}>
@@ -129,6 +170,16 @@ toggleDisability(disability, index, checked) {
           style={{ height: 40, width: 200 }}
           placeholder="state"
           onChangeText={(state) => this.setState({ state })}
+          />
+          <TextInput
+          style={{ height: 40, width: 200 }}
+          placeholder="country"
+          onChangeText={(country) => this.setState({ country })}
+          />
+          <TextInput
+          style={{ height: 40, width: 200 }}
+          placeholder="zip code"
+          onChangeText={(zip_code) => this.setState({ zip_code })}
           />
         <Text style={styles.text}>
           *Description: 
@@ -245,7 +296,7 @@ toggleDisability(disability, index, checked) {
         </Text> 
         <TextInput
           style={{ height: 40, width: 200 }}
-          placeholder="youngest-oldest"
+          placeholder="[youngest,oldest]"
           onChangeText={(age_range) => this.setState({age_range })}
           />
         <Text style={styles.text}>
@@ -288,7 +339,7 @@ toggleDisability(disability, index, checked) {
         </Text> 
         <TextInput
           style={{ height: 40, width: 200 }}
-          placeholder="kids : staff"
+          placeholder="e.g 1.5"
           onChangeText={(kids_to_staff) => this.setState({kids_to_staff })}
           />
         <Text style={styles.text}>
@@ -337,7 +388,7 @@ toggleDisability(disability, index, checked) {
           leftText={''}
         />
         <Button
-          onPress={ () => this._navigate() }
+          onPress={ this.onSubmitButtonPressed.bind(this) }
           title="Submit"
           accessibilityLabel="Submit"
         />

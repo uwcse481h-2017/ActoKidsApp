@@ -19,19 +19,31 @@ import {
 import events from './events.json';
  //import SearchBar from 'react-native-searchbar'; 
 
+var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
 export default class HomePage extends Component {
     constructor(props) {
-    super(props);
-     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {id: 1, text: '', 
-        dataSource: ds.cloneWithRows(events.data)
-      }
-  }
+      super(props);
+      this.state = {id: 1, text: '', dataSource: ds}
+    }
+
+    componentWillMount() {
+      var url = 'http://10.0.2.2:3000/api/activities/getAllActivities'
+
+      fetch(url)
+        .then((res) => res.json())
+        .then((resJson) => {
+          this.setState({dataSource: ds.cloneWithRows(resJson.data)});
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
 
 
- _navigate (){
-  this.props.navigator.push({title: 'Filter Page', index: 3})
-}
+    _navigate (){
+      this.props.navigator.push({title: 'Filter Page', index: 3})
+    }
 
   render() {
     return (     
