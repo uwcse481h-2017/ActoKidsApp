@@ -17,7 +17,7 @@ import {
   View
 } from 'react-native';
 //import Filter from './filter';
-import CheckBox from 'react-native-checkbox';
+import CheckBox from 'react-native-check-box';
 
 //import SearchBar from 'react-native-searchbar'; 
 
@@ -27,11 +27,31 @@ export default class EnterEvent extends Component {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       id: 1, ActivityName: '', date: '', frequency: '', time: '', cost: '', description: '', street_address: '', city: '', state: '', wheelchair_accessible: false,
-      wheelchair_accessible_restroom: false, activity_type: '', disability_types: [], age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
+      wheelchair_accessible_restroom: false, activity_type: [], disability_types: [], age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
       sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false
     }
 
   }
+
+toggleActivity(activity, index, checked) {
+  if(checked) { 
+     this.state.activity_type.append(activity)
+  } else{
+   this.setState({
+     data: this.state.activity_type.filter((_, i) => i !== index)
+   });
+  }
+}
+
+toggleDisability(disability, index, checked) {
+  if(checked) { 
+     this.state.disability_type.append(disability)
+  } else{
+    this.setState({
+      data: this.state.disability_type.filter((_, i) => i !== index)
+    });
+  }
+}
 
    _navigate (){
   this.props.navigator.push({title: 'Home Screen', index: 0})
@@ -65,19 +85,16 @@ export default class EnterEvent extends Component {
           *Frequency: 
         </Text>
          <CheckBox
-          label='One-time'
-          checked={false}
-         onChange={(checked) => this.setState({frequency : 'one-time'}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({frequency : 'one-time'})}
+          isChecked={false}
+          leftText={'One-time'}
         />
         <CheckBox
-          label='Weekly'
-          checked={false}
-         onChange={(checked) =>  this.setState({frequency : 'weekly'}) }
-        />
-        <CheckBox
-          label='Monthly'
-          checked={false}
-         onChange={(checked) => this.setState({frequency : 'monthly'}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({frequency : 'recurring'})}
+          isChecked={false}
+          leftText={'Recurring'}
         />
         <Text>
           *Time:
@@ -125,85 +142,103 @@ export default class EnterEvent extends Component {
           *Wheelchair Accessible: 
         </Text> 
         <CheckBox
-          checked={false}
-         onChange={(checked) => this.setState({wheelchair_accessible : true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({wheelchair_accessible : !checked}) }
+          isChecked={false}
+          leftText={''}
         />
         <Text>
           *Wheelchair Accessible Restroom: 
         </Text>
         <CheckBox
-          checked={false}
-         onChange={(checked) => this.setState({wheelchair_accessible_restroom : true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({wheelchair_accessible_restroom : !checked}) }
+          isChecked={false}
+          leftText={''}       
         />
-         <Text>
+        <Text>
           *Activity Type: 
         </Text> 
-     <CheckBox
-          label='Outdoors & Nature'
-          checked={false}
-         onChange={(checked) => this.setState({activity_type : 'outdoors'}) }
+        <CheckBox
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleActivity('outdoors', this.state.activity_type.indexOf('outdoors'), checked));  }}
+          isChecked={false}
+          leftText={'Outdoors & Nature'}
         />
         <CheckBox
-          label='Sports'
-          checked={false}
-         onChange={(checked) => this.setState({activity_type : 'sports'}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleActivity('sports', this.state.activity_type.indexOf('sports'), checked));  }}
+          isChecked={false}
+          leftText={'Sports'}
         />
         <CheckBox
-          label='Music'
-          checked={false}
-         onChange={(checked) => this.setState({activity_type : 'music'}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleActivity('music', this.state.activity_type.indexOf('music'), checked));  }}
+          isChecked={false}
+          leftText={'Music'}
         />
         <CheckBox
-          label='Zoo'
-          checked={false}
-         onChange={(checked) => this.setState({activity_type : 'zoo'}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleActivity('zoo', this.state.activity_type.indexOf('zoo'), checked));  }}
+          isChecked={false}
+          leftText={'Zoo'}
         />
         <CheckBox
-          label='Art'
-          checked={false}
-         onChange={(checked) => this.setState({activity_type : 'art'}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleActivity('art', this.state.activity_type.indexOf('art'), checked));  }}
+          isChecked={false}
+          leftText={'art'}
         />
          <CheckBox
-          label='Camps'
-          checked={false}
-         onChange={(checked) => this.setState({activity_type : 'camps'}) }
-        /><CheckBox
-          label='Museum'
-          checked={false}
-         onChange={(checked) => this.setState({activity_type : 'museum'}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleActivity('camps', this.state.activity_type.indexOf('camps'), checked));  }}
+          isChecked={false}
+          leftText={'Camps'}
         />
         <CheckBox
-          label='Other'
-          checked={false}
-         onChange={(checked) => this.setState({activity_type : 'other'}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleActivity('museum', this.state.activity_type.indexOf('museum'), checked));  }}
+          isChecked={false}
+          leftText={'Museum'}
+        />
+        <CheckBox
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleActivity('other', this.state.activity_type.indexOf('other'), checked));  }}
+          isChecked={false}
+          leftText={'Other'}
         />
         <Text>
           *Disability Type: 
         </Text> 
-         <CheckBox
-          label='Cognitive'
-          checked={false}
-         onChange={(checked) => this.disability_types.push('cognitive')}
+        <CheckBox
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleDisability('cognitive', this.state.disability_type.indexOf('cognitive'), checked));  }}
+          isChecked={false}
+          leftText={'Cognitive'}
         />
-          <CheckBox
-          label='Mobility'
-          checked={false}
-         onChange={(checked) => this.disability_types.push('mobility')}
+        <CheckBox
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleDisability('mobility', this.state.disability_type.indexOf('mobility'), checked));  }}
+          isChecked={false}
+          leftText={'Mobility'}
         />
-          <CheckBox
-          label='Hearing'
-          checked={false}
-         onChange={(checked) => this.disability_types.push('hearing')}
+        <CheckBox
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleDisability('hearing', this.state.disability_type.indexOf('hearing'), checked));  }}
+          isChecked={false}
+          leftText={'Hearing'}
         />
-          <CheckBox
-          label='Vision'
-          checked={false}
-         onChange={(checked) => this.disability_types.push('vision')}
+        <CheckBox
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleDisability('vision', this.state.disability_type.indexOf('vision'), checked));  }}
+          isChecked={false}
+          leftText={'Vision'}
         />
-          <CheckBox
-          label='Sensory'
-          checked={false}
-         onChange={(checked) => this.disability_types.push('sensory')}
+        <CheckBox
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => { (this.toggleDisability('sensory', this.state.disability_type.indexOf('sensory'), checked));  }}
+          isChecked={false}
+          leftText={'Sensory'}
         />
         <Text>
           *Age range: 
@@ -217,15 +252,19 @@ export default class EnterEvent extends Component {
           *Parent participation required: 
         </Text> 
         <CheckBox
-          checked={false}
-         onChange={(parent_participation) => this.setState({parent_participation : true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({parent_participation : !checked}) }
+          isChecked={false}
+          leftText={''}
         />
         <Text>
           *Assistant Provided: 
         </Text>
         <CheckBox
-          checked={false}
-         onChange={(checked) => this.setState({assistant : true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({assistant : !checked}) }
+          isChecked={false}
+          leftText={''}
         />
          <Text>
           Equipment provided: 
@@ -239,8 +278,10 @@ export default class EnterEvent extends Component {
           Sibling participation allowed: 
         </Text> 
         <CheckBox
-          checked={false}
-         onChange={(checked) => this.setState({sibling : true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({sibling : !checked}) }
+          isChecked={false}
+          leftText={''}
         />
         <Text>
           Kids to staff ratio: 
@@ -254,43 +295,53 @@ export default class EnterEvent extends Component {
           ASL Interpreter available:  
         </Text> 
         <CheckBox
-          checked={false}
-         onChange={(checked) => this.setState({asl: true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({asl : !checked}) }
+          isChecked={false}
+          leftText={''}
         />
         <Text>
           Closed circuit hearing loop:
         </Text>
         <CheckBox
-          checked={false}
-         onChange={(checked) => this.setState({closed_circuit: true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({closed_circuit : !checked}) }
+          isChecked={false}
+          leftText={''}
         /> 
         <Text>
           Additional charge for personal care attendant:
         </Text>
         <CheckBox
-          checked={false}
-         onChange={(checked) => this.setState({add_charge: true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({add_charge : !checked}) }
+          isChecked={false}
+          leftText={''}
         />
          <Text>
           Can accomodate service animals:
         </Text> 
         <CheckBox
-          checked={false}
-         onChange={(checked) => this.setState({animals: true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({animals : !checked}) }
+          isChecked={false}
+          leftText={''}
         />
         <Text>
           Childcare onsite:  
         </Text>
         <CheckBox
-          checked={false}
-         onChange={(checked) => this.setState({childcare: true}) }
+          style={{flex: 1, padding: 10}}
+          onClick={(checked) => this.setState({childcare : !checked}) }
+          isChecked={false}
+          leftText={''}
         />
-         <Button
-         onPress={ () => this._navigate() }
-            title="Submit"
-            accessibilityLabel="Submit"
-          />
-              </ScrollView>
+        <Button
+          onPress={ () => this._navigate() }
+          title="Submit"
+          accessibilityLabel="Submit"
+        />
+      </ScrollView>
 
     );
   }
