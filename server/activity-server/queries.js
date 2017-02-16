@@ -67,19 +67,51 @@ function getAllActivities(req, res, next) {
 //
 // create a new activity
 function createNewActivity(req, res, next) {
-  db.none('INSERT INTO '+ settings.activity_test_database
+  // console.log(req.body);
+  var json = req.body;
+  var a = json.a;
+  var b = json.b;
+  var c = json.c;
+  var d = json.d;
+  var e = json.e;
+  var f = json.f;
+  var g = json.g;
+  var h = json.h;
+  var i = json.i;
+  var j = json.j;
+  var k = json.k;
+  var l = json.l;
+  var m = json.m;
+  var n = json.n;
+  var o = json.o;
+  var p = json.p;
+  var q = json.q;
+  var r = json.r;
+  var s = json.s;
+  var t = json.t;
+  var u = json.u;
+  var v = json.v;
+  var w = json.w;
+  var x = json.x;
+  var y = json.y;
+
+  var str = 'INSERT INTO '+ settings.activity_test_database
   + '(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code,'
   + 'descriptions, wheelchair_accessible, activity_type, disability_type, age_range,'
   + 'parent_participation_required, assistant_provided, disability_restrooms_available,'
   + 'equipment_provided, sibling_participation, kids_to_staff_ratio, asl_interpreter_available,'
   + 'closed_circuit_heering_loop_available, additional_charge, accomodate_service_animals,'
   + 'onsite_childcare)'
-  + ' values(${activity_name}, ${dates}::date, numrange(${time_of_day}), money(${cost}), ${street_name}, ${city}, ${state}'
-  + ', ${country}, ${zip_code}::integer, ${descriptions}, ${wheelchair_accessible}::bool, ${activity_type}::activity_options'
-  + ', ${disability_type}::disability_options, ${age_range}::int4range, ${parent_participation_required}::bool, ${assistant_provided}::bool'
-  + ', ${disability_restrooms_available}::bool, ${equipment_provided}, ${sibling_participation}::bool'
-  + ', ${kids_to_staff_ratio}::real, ${asl_interpreter_available}::bool, ${closed_circuit_heering_loop_available}::bool'
-  + ', ${additional_charge}::bool, ${accomodate_service_animals}::bool, ${onsite_childcare}::bool)', req.body)
+  + " values('" + a + "', '(" + b + ")'::date, numrange('" + c + "'), money('" + d + "'), '" + e + "', '" + f + "', '" + g + "'"
+  + ", '" + h + "', '" + i + "'::integer, '" + j + "', '" + k + "'::bool, '" + l + "'::activity_options"
+  + ", '" + m + "'::disability_options, '" + n + "'::int4range, '" + o + "'::bool, '" + p + "'::bool"
+  + ", '" + q + "'::bool, '" + r + "', '" + s + "'::bool"
+  + ", '" + t + "'::real, '" + u + "'::bool, '" + v + "'::bool"
+  + ", '" + w + "'::bool, '" + x + "'::bool, '" + y + "'::bool)";
+
+  // console.log(str);
+
+  db.none(str, req.body)
     .then(function () {
       res.status(200)
         .json({
@@ -88,7 +120,8 @@ function createNewActivity(req, res, next) {
         });
     })
     .catch(function (err) {
-      console.log(req.body);
+      // console.log(req.body);
+      // console.log(res);
       return next(err);
     });
 }

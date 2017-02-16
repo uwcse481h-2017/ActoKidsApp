@@ -14,7 +14,8 @@ import {
   ScrollView,
   Button,
   Navigator,
-  View
+  View,
+  Alert
 } from 'react-native';
 //import Filter from './filter';
 import CheckBox from 'react-native-check-box';
@@ -55,33 +56,37 @@ export default class EnterEvent extends Component {
 
   onSubmitButtonPressed() {
     var body = JSON.stringify({
-        activity_name: this.state.ActivityName,
-        dates: this.state.date,
-        time_of_day: this.state.time,
-        cost: this.state.cost,
-        street_name: this.state.street_address,
-        city: this.state.city,
-        state: this.state.state,
-        country: this.state.country, 
-        zip_code: this.state.zip_code,
-        descriptions: this.state.description,
-        wheelchair_accessible: this.state.wheelchair_accessible,
-        activity_type: this.state.activity_type,
-        disability_type: this.state.disability_type,
-        age_range: this.state.age_range,
-        parent_participation_required: this.state.parent_participation,
-        assistant_provided: this.state.assistant,
-        disability_restrooms_available: this.state.wheelchair_accessible_restroom,
-        equipment_provided: this.state.equipment_provided,
-        sibling_participation: this.state.sibling,
-        kids_to_staff_ratio: this.state.kids_to_staff,
-        asl_interpreter_available: this.state.asl,
-        closed_circuit_heering_loop_available: this.state.closed_circuit,
-        additional_charge: this.state.add_charge,
-        accomodate_service_animals: this.state.animals,
-        onsite_childcare: this.state.chldcare})
+        a: this.state.ActivityName,
+        b: this.state.date,
+        c: this.state.time,
+        d: this.state.cost,
+        e: this.state.street_address,
+        f: this.state.city,
+        g: this.state.state,
+        h: this.state.country, 
+        i: this.state.zip_code,
+        j: this.state.description,
+        k: this.state.wheelchair_accessible,
+        l: 'Zoo',
+        m: 'Mobility',
+        n: this.state.age_range,
+        o: this.state.parent_participation,
+        p: this.state.assistant,
+        q: this.state.wheelchair_accessible_restroom,
+        r: this.state.equipment_provided,
+        s: this.state.sibling,
+        t: this.state.kids_to_staff,
+        u: this.state.asl,
+        v: this.state.closed_circuit,
+        w: this.state.add_charge,
+        x: this.state.animals,
+        y: this.state.childcare});
+    // Alert.alert(body);
     fetch('http://10.0.2.2:3000/api/activities/createNewActivity', {
         method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'},
         body: body
       })
       // .then( (res)=> res.json() )
