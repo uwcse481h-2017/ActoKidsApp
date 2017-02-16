@@ -13,6 +13,7 @@ CREATE TYPE disability_options AS ENUM('Cognitive', 'Mobility', 'Hearing', 'Visi
 CREATE TABLE activity_test (
     activity_name TEXT NOT NULL,
     dates DATE NOT NULL CHECK(dates >= current_date),
+    time_of_day NUMRANGE NOT NULL,
     cost MONEY NOT NULL CHECK(cost >= 0.0::money),
     street_name TEXT NOT NULL,
     city TEXT NOT NULL,
@@ -37,3 +38,12 @@ CREATE TABLE activity_test (
     onsite_childcare BOOLEAN
 );
 
+INSERT INTO activity_test(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code,
+descriptions, wheelchair_accessible, activity_type, disability_type, age_range,
+parent_participation_required, assistant_provided, disability_restrooms_available, 
+equipment_provided, sibling_participation, kids_to_staff_ratio, asl_interpreter_available, 
+closed_circuit_heering_loop_available, additional_charge, accomodate_service_animals, 
+onsite_childcare) values('Fun Activity', cast('2017-02-24' as date), numrange(12.0, 15.0), money(21.50), 
+'1234 Random Street', 'Seattle', 'WA', 'United States', 98105, 'An activity created for testing purpose only',
+true, 'Zoo'::activity_options, 'Mobility'::disability_options, int4range(5,10), false, true, false,
+ARRAY['equp 1', 'equip 2'], false, 3.0, true, false, false, true, false);
