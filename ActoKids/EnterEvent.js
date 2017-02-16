@@ -27,7 +27,7 @@ export default class EnterEvent extends Component {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       id: 1, ActivityName: '', date: '', frequency: '', time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: false,
-      wheelchair_accessible_restroom: false, activity_type: [], disability_types: [], age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
+      wheelchair_accessible_restroom: false, activity_type: [], disability_type: [], age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
       sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false
     }
 
@@ -67,7 +67,7 @@ export default class EnterEvent extends Component {
         descriptions: this.state.description,
         wheelchair_accessible: this.state.wheelchair_accessible,
         activity_type: this.state.activity_type,
-        disability_type: this.state.disability_types,
+        disability_type: this.state.disability_type,
         age_range: this.state.age_range,
         parent_participation_required: this.state.parent_participation,
         assistant_provided: this.state.assistant,
@@ -119,7 +119,7 @@ export default class EnterEvent extends Component {
         </Text>
         <TextInput
           style={{ height: 40, width: 200 }}
-          placeholder="mm/dd/yyyy"
+          placeholder="yyyy-mm-dd"
           onChangeText={(date) => this.setState({ date })}
           />
         <Text style={styles.text}>
