@@ -125,3 +125,28 @@ function createNewActivity(req, res, next) {
       return next(err);
     });
 }
+
+//Filter activities
+function findFilteredActivities(req, res, next) {
+  // console.log(req.body);
+  var json = req.body;
+
+ var str = 'SELECT * from ' + settings.activity_test_database + 'WHERE ' + 'activity_type = ' + json.activity_types + " AND disability_type = "
+  + json.disability_types + 'AND frequency = ' + json.frequency + 'AND day_of_week = '  + json.day_of_week + 'AND time_of_day = ' +
+  json.time_of_day; 
+
+ db.any(str, req.body)
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Getting matching activities.'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+
+}
+
