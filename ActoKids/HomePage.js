@@ -23,21 +23,34 @@ import EnterEvent from './EnterEvent';
 export default class HomePage extends Component {
     constructor(props) {
     super(props);
-     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {id: 1, text: '', 
-        dataSource: ds.cloneWithRows([
-        'Arts', 'Sports', 'Football', 'Camp', 'Hiking', 'Baking', 'Other', 'One more'
-        ])
+      this.state = {id: 1, text: '',
+        dataSource: null
       }
    
   }
 
-_navigateSearch (){
-  this.props.navigator.push({title: 'Search Page', index: 2})
+_navigateSearch(info){
+  this.props.navigator.push({title: 'Search Page', index: 2, 
+    passProps : { data: info }
+  })
 }
 
 _navigateEvent (){
   this.props.navigator.push({title: 'Add Event', index: 1})
+}
+
+get_events() { 
+  var url = 'http://10.0.2.2:3000/api/activities/getAllActivities'
+     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+      fetch(url)
+        .then((res) => res.json())
+        .then((resJson) => {
+          this._navigateSearch(resJson.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 }
 
   render() {
@@ -47,7 +60,7 @@ _navigateEvent (){
           Welcome to ActoKids!
         </Text>
          <Button
-            onPress={ () => this._navigateSearch() }
+            onPress={ () => this.get_events() } 
             title="Search For An Activity"
             accessibilityLabel="Search"
           />

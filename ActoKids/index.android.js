@@ -24,7 +24,7 @@ class ActoKids extends Component {
            } else if (route.index == 1) {
             return <EnterEvent navigator={navigator} />         
            } else if(route.index == 2) { 
-            return <SearchPage navigator={navigator} />
+            return <SearchPage navigator={navigator} {...route.passProps} />
            } else if (route.index == 3) { 
             return <FilterPage navigator={navigator} />
            } else { 

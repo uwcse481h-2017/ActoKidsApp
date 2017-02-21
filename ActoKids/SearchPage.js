@@ -23,11 +23,12 @@ var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class HomePage extends Component {
     constructor(props) {
+      //console.warn(JSON.stringify(props.data));
       super(props);
-      this.state = {id: 1, text: '', dataSource: ds}
+      this.state = {id: 1, text: '', dataSource: ds.cloneWithRows(props.data)};
     }
 
-    componentWillMount() {
+ /*   componentWillMount() {
       var url = 'http://10.0.2.2:3000/api/activities/getAllActivities'
 
       fetch(url)
@@ -38,7 +39,7 @@ export default class HomePage extends Component {
         .catch((error) => {
           console.error(error);
         });
-    }
+    }*/
 
 
     _navigate (){
@@ -87,7 +88,3 @@ const styles = StyleSheet.create({
   },
 
 });
-
-
-
-//AppRegistry.registerComponent('ActoKids', () => ActoKids);
