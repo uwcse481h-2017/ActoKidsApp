@@ -30,66 +30,66 @@ export default class FilterPage extends Component {
       dataSource :  null
       }
   }
-_navigate(info){
-  this.props.navigator.push({title: 'Search Page', index: 2, 
-  passProps : { data: info.data }
-  })
+  _navigateSearch(info){
+    this.props.navigator.push({title: 'Search Page', index: 2, 
+    passProps : { data: info.data }
+    })
+  }
+
+  removeFrequency(frequency, index, checked) {
+    if(checked) { 
+       this.state.frequency.append(frequency)
+    } else{
+     this.setState({
+       data: this.state.frequency.filter((_, i) => i !== index)
+     });
+    }
+  }
+
+  removeDay(day, index, checked) {
+    if(checked) { 
+       this.state.day_of_week.append(day)
+    } else{
+     this.setState({
+       data: this.state.day_of_week.filter((_, i) => i !== index)
+     });
+    }
+  }
+
+  removeTime(time, index, checked) {
+    if(checked) { 
+       this.state.time_of_day.append(time)
+    } else{
+     this.setState({
+       data: this.state.time_of_day.filter((_, i) => i !== index)
+     });
+    }
 }
 
-removeFrequency(frequency, index, checked) {
-  if(checked) { 
-     this.state.frequency.append(frequency)
-  } else{
-   this.setState({
-     data: this.state.frequency.filter((_, i) => i !== index)
-   });
+  removeActivity(activity, index, checked) {
+    if(checked) { 
+       this.state.activity_types.append(activity)
+    } else{
+     this.setState({
+       data: this.state.activity_types.filter((_, i) => i !== index)
+     });
+    }
   }
-}
 
-removeDay(day, index, checked) {
-  if(checked) { 
-     this.state.day_of_week.append(day)
-  } else{
-   this.setState({
-     data: this.state.day_of_week.filter((_, i) => i !== index)
-   });
-  }
-}
-
-removeTime(time, index, checked) {
-  if(checked) { 
-     this.state.time_of_day.append(time)
-  } else{
-   this.setState({
-     data: this.state.time_of_day.filter((_, i) => i !== index)
-   });
-  }
-}
-
-removeActivity(activity, index, checked) {
-  if(checked) { 
-     this.state.activity_types.append(activity)
-  } else{
-   this.setState({
-     data: this.state.activity_types.filter((_, i) => i !== index)
-   });
-  }
-}
-
-removeDisability(disability, index, checked) {
-  if(checked) { 
-     this.state.disability_types.append(disability)
-  } else{
-    this.setState({
-      data: this.state.disability_types.filter((_, i) => i !== index)
-    });
-  }
+  removeDisability(disability, index, checked) {
+    if(checked) { 
+       this.state.disability_types.append(disability)
+    } else{
+      this.setState({
+        data: this.state.disability_types.filter((_, i) => i !== index)
+      });
+    }
 }
 
  get_events() {
     var body = JSON.stringify({
-        activity_type: 'Zoo',
-        disability_type: 'Mobility',
+        activity_type: 'Music',
+        disability_type: 'Physical',
         frequency: 'once',
         day_of_week: 'Sunday',
         time_of_day: 'Morning'
@@ -104,7 +104,7 @@ removeDisability(disability, index, checked) {
       })
        .then( (res)=> res.json() )
        .then( (resData) => { 
-          this._navigateSearch(resJson); }) 
+          this._navigateSearch(resData); }) 
       //   console.log("Response Body -> " + JSON.stringify(resData.body) );
       // } )
       .done();

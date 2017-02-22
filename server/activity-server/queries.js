@@ -14,7 +14,8 @@ var db = pgp(connectionString);
 
 module.exports = {
   getAllActivities: getAllActivities,
-  createNewActivity: createNewActivity
+  createNewActivity: createNewActivity,
+  findFilteredActivities:findFilteredActivities
   // add more functions here
 };
 
