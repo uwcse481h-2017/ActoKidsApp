@@ -14,6 +14,7 @@ import {
   Button,
   Navigator,
   ScrollView,
+  TouchableHighlight,
   View
 } from 'react-native';
 //import Filter from './filter';
@@ -24,7 +25,6 @@ export default class FilterPage extends Component {
     super(props);
     this.state= { activity_types: ['outdoors', 'sports', 'music', 'zoo', 'art', 'camps', 'museum', 'other'], 
       disability_types: ['cognitive', 'mobility', 'hearing', 'vision', 'sensory'],
-      frequency: ['once', 'recurring'],
       day_of_week:['sun', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat'],
       time_of_day:['morning', 'noon', 'evening'],
       dataSource :  null
@@ -109,11 +109,18 @@ export default class FilterPage extends Component {
       // } )
       .done();
   }
+  
+  _onBack () { 
+    this.props.navigator.pop();
+  }
 
   render() {
     return (   
       <View>  
       <ScrollView>
+      <TouchableHighlight onPress={ () => this._onBack() }>
+          <Text> Back </Text>
+       </TouchableHighlight>
         <Text style={styles.header}>
           Welcome to ActoKids!
         </Text>
@@ -200,22 +207,6 @@ export default class FilterPage extends Component {
           onClick={(checked) => { (this.removeDisability('sensory', this.state.disability_types.indexOf('sensory'), checked));  }}
           isChecked={true}
           leftText={'Sensory'}
-        />
-
-        <Text style={ styles.header }>
-          Frequency
-        </Text>
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeFrequency('once', this.state.frequency.indexOf('once'), checked));  }}
-          isChecked={true}
-          leftText={'One-time'}
-        />
-       <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeFrequency('recurring', this.state.frequency.indexOf('recurring'), checked));  }}
-          isChecked={true}
-          leftText={'Recurring'}
         />
         <Text style={ styles.header }>
           Day of Week

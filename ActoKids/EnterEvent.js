@@ -15,6 +15,7 @@ import {
   Button,
   Navigator,
   View,
+  TouchableHighlight,
   Alert
 } from 'react-native';
 //import Filter from './filter';
@@ -27,9 +28,9 @@ export default class EnterEvent extends Component {
     super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      id: 1, ActivityName: '', date: '', frequency: '', time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: false,
+      id: 1, ActivityName: '', date: '', time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: false,
       wheelchair_accessible_restroom: false, activity_type: [], disability_type: [], age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
-      sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false
+      sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false, phone: ''
     }
 
   }
@@ -101,10 +102,15 @@ export default class EnterEvent extends Component {
    _navigate (){
     this.props.navigator.push({title: 'Home Screen', index: 0})
   }
-
+  _onBack () { 
+    this.props.navigator.pop();
+  }
   render() {
     return (
       <ScrollView>
+       <TouchableHighlight onPress={ () => this._onBack() }>
+          <Text> Back </Text>
+       </TouchableHighlight>
         <Text style={styles.text}>
           Welcome to ActoKids!
         </Text>
@@ -127,21 +133,6 @@ export default class EnterEvent extends Component {
           placeholder="yyyy-mm-dd"
           onChangeText={(date) => this.setState({ date })}
           />
-        <Text style={styles.text}>
-          *Frequency: 
-        </Text>
-         <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => this.setState({frequency : 'one-time'})}
-          isChecked={false}
-          leftText={'One-time'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => this.setState({frequency : 'recurring'})}
-          isChecked={false}
-          leftText={'Recurring'}
-        />
         <Text style={styles.text}>
           *Time:
         </Text> 
@@ -322,6 +313,14 @@ export default class EnterEvent extends Component {
           isChecked={false}
           leftText={''}
         />
+        <Text style={styles.text}>
+          *Phone number to call for accessibility questions:
+        </Text>
+        <TextInput
+          style={{ height: 40, width: 200 }}
+          placeholder="(xxx)xxx-xxxx"
+          onChangeText={(phone) => this.setState({ phone })}
+          />
         <Text style={styles.text}>
           Equipment provided: 
         </Text> 

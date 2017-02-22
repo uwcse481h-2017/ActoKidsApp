@@ -12,6 +12,7 @@ import {
   TextInput,
   ListView,
   Button,
+  TouchableHighlight,
   Navigator,
   View
 } from 'react-native';
@@ -46,10 +47,16 @@ export default class HomePage extends Component {
     _navigate (){
       this.props.navigator.push({title: 'Filter Page', index: 3})
     }
+      _onBack () { 
+    this.props.navigator.pop();
+  }
 
   render() {
     return (     
     <View>
+     <TouchableHighlight onPress={ () => this._onBack() }>
+          <Text> Back </Text>
+       </TouchableHighlight>
         <Text style={styles.header}>
           Welcome to ActoKids!
         </Text>
