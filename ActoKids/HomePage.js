@@ -31,7 +31,7 @@ export default class HomePage extends Component {
 
 _navigateSearch(info){
   this.props.navigator.push({title: 'Search Page', index: 2, 
-    passProps : { data: info }
+    passProps : { data: info.data }
   })
 }
 
@@ -46,7 +46,7 @@ get_events() {
       fetch(url)
         .then((res) => res.json())
         .then((resJson) => {
-          this._navigateSearch(resJson.data);
+          this._navigateSearch(resJson);
         })
         .catch((error) => {
           console.error(error);
@@ -83,6 +83,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   }
 });
-
-
-//AppRegistry.registerComponent('ActoKids', () => ActoKids);

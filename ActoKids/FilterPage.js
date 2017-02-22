@@ -16,7 +16,7 @@ import {
   ScrollView,
   View
 } from 'react-native';
-import Filter from './filter';
+//import Filter from './filter';
 import CheckBox from 'react-native-check-box';
 
 export default class FilterPage extends Component {
@@ -27,10 +27,13 @@ export default class FilterPage extends Component {
       frequency: ['once', 'recurring'],
       day_of_week:['sun', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat'],
       time_of_day:['morning', 'noon', 'evening'],
+      dataSource :  null
       }
   }
-_navigate(){
-  this.props.navigator.push({title: 'Search Page', index: 2})
+_navigate(info){
+  this.props.navigator.push({title: 'Search Page', index: 2, 
+  passProps : { data: info.data }
+  })
 }
 
 removeFrequency(frequency, index, checked) {
@@ -82,6 +85,30 @@ removeDisability(disability, index, checked) {
     });
   }
 }
+
+ get_events() {
+    var body = JSON.stringify({
+        activity_type: 'Zoo',
+        disability_type: 'Mobility',
+        frequency: 'once',
+        day_of_week: 'Sunday',
+        time_of_day: 'Morning'
+       });
+    // Alert.alert(body);
+    fetch('http://10.0.2.2:3000/api/activities/findFilteredActivities', {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'},
+        body: body
+      })
+       .then( (res)=> res.json() )
+       .then( (resData) => { 
+          this._navigateSearch(resJson); }) 
+      //   console.log("Response Body -> " + JSON.stringify(resData.body) );
+      // } )
+      .done();
+  }
 
   render() {
     return (   
@@ -257,7 +284,7 @@ removeDisability(disability, index, checked) {
           leftText={'Evening'}
         />
         <Button
-            onPress={ () => this._navigate() }
+            onPress={ () => this.get_events()}  
             title="Submit"
             accessibilityLabel="Submit"
          />

@@ -23,9 +23,10 @@ var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class HomePage extends Component {
     constructor(props) {
-      //console.warn(JSON.stringify(props.data));
+      var dat = props.data == undefined? JSON.stringify({'activity_name': 'none'}) : JSON.stringify(props.data); 
+      var obj = JSON.parse(dat);
       super(props);
-      this.state = {id: 1, text: '', dataSource: ds.cloneWithRows(props.data)};
+      this.state = {id: 1, text: '', dataSource: ds.cloneWithRows(obj)};
     }
 
  /*   componentWillMount() {

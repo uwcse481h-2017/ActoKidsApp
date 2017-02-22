@@ -131,9 +131,9 @@ function findFilteredActivities(req, res, next) {
   // console.log(req.body);
   var json = req.body;
 
- var str = 'SELECT * from ' + settings.activity_test_database + 'WHERE ' + 'activity_type = ' + json.activity_types + " AND disability_type = "
-  + json.disability_types + 'AND frequency = ' + json.frequency + 'AND day_of_week = '  + json.day_of_week + 'AND time_of_day = ' +
-  json.time_of_day; 
+// var str = 'SELECT * from ' + settings.activity_test_database + " WHERE activity_type = '" + json.activity_type + "' AND disability_type = '"
+ // + json.disability_type + "'"; 
+  var str = 'SELECT * from ' + settings.activity_test_database + " WHERE activity_type = 'Zoo' AND disability_type = 'Mobility'";
 
  db.any(str, req.body)
     .then(function (data) {
