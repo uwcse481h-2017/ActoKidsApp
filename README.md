@@ -19,6 +19,7 @@ Open up one last command line and cd into ActoKidsApp/ActoKids  and run
 react-native start-android . This should fetch the JavaScripts and run the app. 
 
 User Guide
+
 Open the app. 
 If you want to enter a new activity into the database, click “Enter an Activity” 
 Go through and enter the required fields and any other optional fields you would like and then press submit. If there is an error in your data, the app will prompt you to fix it. Fix it according to the prompt and try to submit again. Repeat until the submission goes through. 
