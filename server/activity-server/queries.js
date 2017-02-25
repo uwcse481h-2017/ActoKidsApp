@@ -95,16 +95,17 @@ function createNewActivity(req, res, next) {
   var w = json.w;
   var x = json.x;
   var y = json.y;
+  var z = json.z;
 
   var str = 'INSERT INTO '+ settings.activity_test_database
-  + '(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code,'
+  + '(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code, phone_number,'
   + 'descriptions, wheelchair_accessible, activity_type, disability_type, age_range,'
   + 'parent_participation_required, assistant_provided, disability_restrooms_available,'
   + 'equipment_provided, sibling_participation, kids_to_staff_ratio, asl_interpreter_available,'
   + 'closed_circuit_heering_loop_available, additional_charge, accomodate_service_animals,'
   + 'onsite_childcare)'
   + " values('" + a + "', '(" + b + ")'::date, numrange('" + c + "'), money('" + d + "'), '" + e + "', '" + f + "', '" + g + "'"
-  + ", '" + h + "', '" + i + "'::integer, '" + j + "', '" + k + "'::bool, '" + l + "'::activity_options"
+  + ", '" + h + "', '" + i + "'::integer, '" + z + "', '" + j + "', '" + k + "'::bool, '" + l + "'::activity_options"
   + ", '" + m + "'::disability_options, '" + n + "'::int4range, '" + o + "'::bool, '" + p + "'::bool"
   + ", '" + q + "'::bool, '" + r + "', '" + s + "'::bool"
   + ", '" + t + "'::real, '" + u + "'::bool, '" + v + "'::bool"

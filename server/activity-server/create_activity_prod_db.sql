@@ -20,6 +20,7 @@ CREATE TABLE activity_test (
     state TEXT NOT NULL,
     country TEXT NOT NULL,
     zip_code INTEGER,
+    phone_number TEXT NOT NULL,
     descriptions TEXT NOT NULL,
     wheelchair_accessible BOOLEAN NOT NULL,
     activity_type activity_options NOT NULL DEFAULT 'Others',
@@ -38,22 +39,22 @@ CREATE TABLE activity_test (
     onsite_childcare BOOLEAN
 );
 
-INSERT INTO activity_test(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code,
+INSERT INTO activity_test(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code, phone_number,
 descriptions, wheelchair_accessible, activity_type, disability_type, age_range,
 parent_participation_required, assistant_provided, disability_restrooms_available, 
 equipment_provided, sibling_participation, kids_to_staff_ratio, asl_interpreter_available, 
 closed_circuit_heering_loop_available, additional_charge, accomodate_service_animals, 
 onsite_childcare) values('Fun Activity', cast('2017-02-24' as date), numrange(12.0, 15.0), money(21.50), 
-'1234 Random Street', 'Seattle', 'WA', 'United States', 98105, 'An activity created for testing purpose only',
+'1234 Random Street', 'Seattle', 'WA', 'United States', 98105, '(206)123-4567', 'An activity created for testing purpose only',
 true, 'Zoo'::activity_options, 'Mobility'::disability_options, int4range(5,10), false, true, false,
 'equp 1', false, 3.0, true, false, false, true, false);
 
-INSERT INTO activity_test(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code,
+INSERT INTO activity_test(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code, phone_number,
 descriptions, wheelchair_accessible, activity_type, disability_type, age_range,
 parent_participation_required, assistant_provided, disability_restrooms_available,
 equipment_provided, sibling_participation, kids_to_staff_ratio, asl_interpreter_available,
 closed_circuit_heering_loop_available, additional_charge, accomodate_service_animals,
 onsite_childcare) values('random_activity', '2017-02-27'::date, numrange('(10.5,16.75)'), money('10.5'),
-'5613_Random_Street', 'Seattle', 'WA', 'US', '98105'::integer,'only_for_testing_purpose',
+'5613_Random_Street', 'Seattle', 'WA', 'US', '98105'::integer, '(425)123-4567', 'only_for_testing_purpose',
 'true'::bool, 'Zoo'::activity_options, 'Mobility'::disability_options, '(4,11)'::int4range, 'false'::bool, 'true'::bool, 'true'::bool,
 'abc', 'true'::bool, '1.5'::real, 'false'::bool, 'false'::bool, 'false'::bool, 'true'::bool, 'false'::bool);
