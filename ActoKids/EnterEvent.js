@@ -82,7 +82,8 @@ export default class EnterEvent extends Component {
         v: this.state.closed_circuit,
         w: this.state.add_charge,
         x: this.state.animals,
-        y: this.state.childcare});
+        y: this.state.childcare,
+        z: this.state.phone});
     // Alert.alert(body);
     fetch('http://10.0.2.2:3000/api/activities/createNewActivity', {
         method: "POST",
