@@ -22,6 +22,14 @@ import {
 //import Filter from './filter';
 import CheckBox from 'react-native-check-box';
 
+const DropDown = require('react-native-dropdown');
+const {
+  Select,
+  Option,
+  OptionList,
+  updatePosition
+} = DropDown;
+
 //import SearchBar from 'react-native-searchbar'; 
 
 export default class EnterEvent extends Component {
