@@ -5,7 +5,7 @@ import requests
 
 GRAPH_VERSION = '2.7'
 
-URL = 'http://10.0.2.2:3000/api/activities/createNewActivity'
+URL = 'http://localhost:3000/api/activities/createNewActivity'
 
 EVENT_PAGES_NAME = [
     '1847852682123882'
@@ -35,8 +35,6 @@ def main():
 
         # extract only data
         event_data = event_dict['data']
-
-        print event_data
 
         # extract necessary information about the event
         for event in event_data:
@@ -84,7 +82,7 @@ def main():
             start_date = start_datetime.date()
             end_date = end_datetime.date()
 
-            details['b'] = start_date
+            details['b'] = str(start_date)
 
             start_time = start_datetime.time()
             end_time = end_datetime.time()
@@ -94,8 +92,8 @@ def main():
             # requried
             details['d'] = details['cost']
             details['k'] = details['wheelchair_accessible']
-            details['l'] = details['activity_type']
-            details['m'] = details['disability_type']
+            details['l'] = details['activity_type'].capitalize()
+            details['m'] = details['disability_type'].capitalize()
             details['n'] = details['age_range']
             details['o'] = details['parent_participation_required']
             details['p'] = details['assistant_provided']
@@ -113,13 +111,17 @@ def main():
             details['x'] = details.get('accomodate_service_animals', 'False')
             details['y'] = details.get('onsite_childcare', 'False')
 
+
+
             if end_date < datetime.date.today():
                 continue # event is alreay finished. No reason of putting them into the database
+
+            # print details
 
             # i is zip code. not required
             if 'a' in details and 'b' in details and 'c' in details and 'd' in details and 'e' in details and 'f' in details and 'g' in details and 'h' in details and 'i' in details and 'j' in details and 'k' in details and 'l' in details and 'm' in details and 'n' in details and 'o' in details and 'p' in details and 'q' in details and 'z' in details:
                 request = requests.post(URL, data=details)
-                print(r.status_code, r.reason)
+                # print(request.status_code, request.reason)
                 continue
 
             print 'Missing some entries'
