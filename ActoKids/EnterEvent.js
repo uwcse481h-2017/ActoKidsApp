@@ -14,6 +14,7 @@ import {
   ScrollView,
   Button,
   Navigator,
+  Picker,
   View,
   TouchableHighlight,
   Alert
@@ -29,7 +30,7 @@ export default class EnterEvent extends Component {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       id: 1, ActivityName: '', date: '', time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: false,
-      wheelchair_accessible_restroom: false, activity_type: [], disability_type: [], age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
+      wheelchair_accessible_restroom: false, activity_type: '', disability_type: '', age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
       sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false, phone: ''
     }
 
