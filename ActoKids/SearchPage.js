@@ -43,7 +43,11 @@ export default class HomePage extends Component {
         });
     }*/
 
-
+_onSelect(data) { 
+      this.props.navigator.push({title: 'Details Page', index: 4, 
+      passProps : { data: data}
+})  
+}
     _navigate (){
       this.props.navigator.push({title: 'Filter Page', index: 3})
     }
@@ -72,7 +76,10 @@ export default class HomePage extends Component {
         />
        <ListView
           dataSource={this.state.dataSource}
-          renderRow={(rowData) => <Text style={styles.listItem}>{rowData.activity_name}</Text>}
+          renderRow={(rowData) => 
+            <TouchableHighlight onPress={() => this._onSelect(rowData)} >
+              <Text style={styles.listItem}>{rowData.activity_name}</Text>
+            </TouchableHighlight> } 
         />
        </View>      
        

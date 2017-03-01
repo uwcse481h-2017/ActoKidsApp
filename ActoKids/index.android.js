@@ -5,6 +5,7 @@ import HomePage from './HomePage';
 import SearchPage from './SearchPage';
 import EnterEvent from './EnterEvent';
 import FilterPage from './FilterPage';
+import DetailsPage from './DetailsPage';
 
 class ActoKids extends Component {
   render() {
@@ -12,7 +13,8 @@ class ActoKids extends Component {
     {title: 'Home Screen', index: 0},
     {title: 'Add Event', index: 1}, 
     {title: 'Search Page', index: 2}, 
-    {title: 'Filter Page', index: 3}
+    {title: 'Filter Page', index: 3}, 
+    {title: 'Details Page', index: 4}
   ];
   return (
     <Navigator
@@ -27,6 +29,8 @@ class ActoKids extends Component {
             return <SearchPage navigator={navigator} {...route.passProps} />
            } else if (route.index == 3) { 
             return <FilterPage navigator={navigator} />
+           } else if (route.index == 4 ) { 
+             return <DetailsPage navigator={navigator} {...route.passProps} />
            } else { 
             return null
            }
