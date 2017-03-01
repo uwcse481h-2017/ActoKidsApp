@@ -12,6 +12,8 @@
     "react-native-check-box": "^1.0.4",
     "react-native-checkbox": "^1.1.0",
     "react-native-dropdown": "0.0.6",
+    "react-native-modal-datetime-picker": "^4.0.0",
+    "react-native-modal-dropdown": "^0.4.1",
     "react-native-searchbar": "^1.6.0"
   },
   "devDependencies": {
