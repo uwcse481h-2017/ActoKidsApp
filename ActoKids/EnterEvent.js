@@ -94,7 +94,9 @@ showTimePicker = async (stateKey, options) => {
   }
 
   onSubmitButtonPressed() {
-    var time = "(" + this.state.startHour + "." + this.state.startMinute / 60.0 + "," + this.state.endHour + "." + this.state.endMinute/60.0+")"; 
+    var startmin = this.state.startHour + this.state.startMinute / 60.0;
+    var endmin = this.state.endHour + this.state.endMinute/60.0;
+    var time = "(" + startmin + "," + endmin +")"; 
     var date = this.state.dateDate.getFullYear() + '-' + this.state.dateDate.getMonth() + '-' + this.state.dateDate.getDate(); 
     var body = JSON.stringify({
         a: this.state.ActivityName,
@@ -123,7 +125,7 @@ showTimePicker = async (stateKey, options) => {
         x: this.state.animals,
         y: this.state.childcare,
         z: this.state.phone});
-    // Alert.alert(body);
+     console.warn(body);
     fetch('http://10.0.2.2:3000/api/activities/createNewActivity', {
         method: "POST",
         headers: {
@@ -138,6 +140,14 @@ showTimePicker = async (stateKey, options) => {
       .done();
 
       this._navigate()
+  }
+
+   yesNo(v) { 
+     if(v == 'Yes') { 
+       return true;
+     } else { 
+       return false;
+     }
   }
 
    _navigate (){
@@ -231,7 +241,7 @@ showTimePicker = async (stateKey, options) => {
         <ModalDropdown 
         textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({wheelchair_accessible : v}) }
+          onSelect={(i,v) => this.setState({wheelchair_accessible : this.yesNo(v) }) } 
         />
         <Text style={styles.text}>
           *Wheelchair Accessible Restroom: 
@@ -239,7 +249,7 @@ showTimePicker = async (stateKey, options) => {
         <ModalDropdown 
                 textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({wheelchair_accessible_restroom : v}) }
+          onSelect={(i,v) =>this.setState({wheelchair_accessible_restroom :  this.yesNo(v)}) }
         />
         <Text style={styles.text}>
           *Activity Type: 
@@ -273,7 +283,7 @@ showTimePicker = async (stateKey, options) => {
  <ModalDropdown 
          textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({parent_participation : v}) }
+          onSelect={(i,v) =>this.setState({parent_participation : this.yesNo(v)}) }
         />
         <Text style={styles.text}>
           *Assistant Provided: 
@@ -281,7 +291,7 @@ showTimePicker = async (stateKey, options) => {
  <ModalDropdown 
          textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({assistant : v}) }
+          onSelect={(i,v) =>this.setState({assistant : this.yesNo(v)}) }
         />
         <Text style={styles.text}>
           *Phone number to call for accessibility questions:
@@ -305,7 +315,7 @@ showTimePicker = async (stateKey, options) => {
  <ModalDropdown 
          textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({sibling : v}) }
+          onSelect={(i,v) =>this.setState({sibling : this.yesNo(v)}) }
         />
         <Text style={styles.text}>
           Kids to staff ratio: 
@@ -321,7 +331,7 @@ showTimePicker = async (stateKey, options) => {
  <ModalDropdown 
                 textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({asl : v}) }
+          onSelect={(i,v) =>this.setState({asl : this.yesNo(v)}) }
         />
         <Text style={styles.text}>
           Closed circuit hearing loop:
@@ -329,7 +339,7 @@ showTimePicker = async (stateKey, options) => {
  <ModalDropdown 
          textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({closed_circuit : v}) }
+          onSelect={(i,v) =>this.setState({closed_circuit : this.yesNo(v)}) }
         />
         <Text style={styles.text}>
           Additional charge for personal care attendant:
@@ -337,7 +347,7 @@ showTimePicker = async (stateKey, options) => {
  <ModalDropdown 
          textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({add_charge : v}) }
+          onSelect={(i,v) =>this.setState({add_charge : this.yesNo(v)}) }
         />
         <Text style={styles.text}>
           Can accomodate service animals:
@@ -345,15 +355,15 @@ showTimePicker = async (stateKey, options) => {
  <ModalDropdown 
          textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({animals : v}) }
+          onSelect={(i,v) =>this.setState({animals : this.yesNo(v)}) }
         />
         <Text style={styles.text}>
           Childcare onsite:  
         </Text>
- <ModalDropdown 
+   <ModalDropdown 
          textStyle ={styles.text}
           options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({childcare : v}) }
+          onSelect={(i,v) =>this.setState({childcare : this.yesNo(v)}) }
         />
         <Button
           onPress={ this.onSubmitButtonPressed.bind(this) }
