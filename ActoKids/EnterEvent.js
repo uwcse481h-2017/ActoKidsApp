@@ -16,13 +16,14 @@ import {
   Navigator,
   View,
   TouchableHighlight,
+  TimePickerAndroid,
+  DatePickerAndroid,
   TouchableOpacity,
   Alert
 } from 'react-native';
 //import Filter from './filter';
 import CheckBox from 'react-native-check-box';
 import ModalDropdown from 'react-native-modal-dropdown';
-//import DateTimePicker from 'react-native-modal-datetime-picker';
 
 //import SearchBar from 'react-native-searchbar'; 
 
@@ -33,18 +34,43 @@ export default class EnterEvent extends Component {
     this.state = {
       id: 1, isDateTimePickerVisible: false, ActivityName: '', date: new Date(), time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: false,
       wheelchair_accessible_restroom: false, activity_type: '', disability_type: '', age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
-      sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false, phone: '', start_date: ''
+      sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false, phone: '', startText: 'Select start time', endText: 'Select end time', 
+      dateText: 'Select date', dateDate : new Date()
     }
 
   }
+showDatePicker = async (stateKey, options) => {
+    try {
+      var newState = {};
+      const {action, year, month, day} = await DatePickerAndroid.open(options);
+      if (action === DatePickerAndroid.dismissedAction) {
+        newState[stateKey + 'Text'] = 'dismissed';
+      } else {
+        var date = new Date(year, month, day);
+        newState[stateKey + 'Text'] = date.toLocaleDateString();
+        newState[stateKey + 'Date'] = date;
+      }
+      this.setState(newState);
+    } catch ({code, message}) {
+      console.warn(`Error in example '${stateKey}': `, message);
+    }
+  };
 
-  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
-
-  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
-
-  _handleDatePicked = (date) => {
-    console.log('A date has been picked: ', date);
-    this._hideDateTimePicker();
+showTimePicker = async (stateKey, options) => {
+    try {
+      const {action, minute, hour} = await TimePickerAndroid.open(options);
+      var newState = {};
+      if (action === TimePickerAndroid.timeSetAction) {
+        newState[stateKey + 'Text'] = "" + hour + ":" + minute;
+        newState[stateKey + 'Hour'] = hour;
+        newState[stateKey + 'Minute'] = minute;
+      } else if (action === TimePickerAndroid.dismissedAction) {
+        newState[stateKey + 'Text'] = 'dismissed';
+      }
+      this.setState(newState);
+    } catch ({code, message}) {
+      console.warn(`Error in example '${stateKey}': `, message);
+    }
   };
 
   toggleActivity(activity, index, checked) {
@@ -68,10 +94,12 @@ export default class EnterEvent extends Component {
   }
 
   onSubmitButtonPressed() {
+    var time = "(" + this.state.startHour + "." + this.state.startMinute / 60.0 + "," + this.state.endHour + "." + this.state.endMinute/60.0+")"; 
+    var date = this.state.dateDate.getFullYear() + '-' + this.state.dateDate.getMonth() + '-' + this.state.dateDate.getDate(); 
     var body = JSON.stringify({
         a: this.state.ActivityName,
-        b: this.state.date,
-        c: this.state.time,
+        b: date,
+        c: time,
         d: this.state.cost,
         e: this.state.street_address,
         f: this.state.city,
@@ -138,23 +166,21 @@ export default class EnterEvent extends Component {
           placeholder="Activity name..."
           onChangeText={(ActivityName) => this.setState({ ActivityName })}
           />
-        <Text style={styles.text}>
-          *Activity Date: 
-        </Text>
-        <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="yyyy-mm-dd"
-          onChangeText={(date) => this.setState({ date })}
-          />
-        <Text style={styles.text}>
-          *Time:
-        </Text> 
-        <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="(hh.mm,hh.mm)"
-          onChangeText={(time) => this.setState({ time })}
-          />
-        
+         <TouchableHighlight
+            onPress={this.showDatePicker.bind(this, 'date', {
+              date: this.state.dateDate,
+              minDate: new Date(),
+            })}>
+            <Text style={styles.text}>{this.state.dateText}</Text>
+          </TouchableHighlight>
+         <TouchableHighlight
+            onPress={this.showTimePicker.bind(this, 'start', {})}>
+            <Text style={styles.text}> {this.state.startText} </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.showTimePicker.bind(this, 'end', {})}>
+            <Text style={styles.text}> {this.state.endText} </Text>
+          </TouchableHighlight>
         <Text style={styles.text}>
           *Cost:  $
         </Text> 
