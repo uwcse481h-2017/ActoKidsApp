@@ -143,6 +143,7 @@ export default class FilterPage extends Component {
         </Text>
 
         <TextInput
+          keyboardType = 'numeric'
           style={{ height: 40, width: 200 }}
           placeholder="e.g 15.00"
           onChangeText={(cost) => this.setState({ cost })}

@@ -97,7 +97,7 @@ showTimePicker = async (stateKey, options) => {
     var startmin = this.state.startHour + this.state.startMinute / 60.0;
     var endmin = this.state.endHour + this.state.endMinute/60.0;
     var time = "(" + startmin + "," + endmin +")"; 
-    var date = this.state.dateDate.getFullYear() + '-' + this.state.dateDate.getMonth() + '-' + this.state.dateDate.getDate(); 
+    var date = this.state.dateDate.getFullYear() + '-' + (this.state.dateDate.getMonth()+1) + '-' + this.state.dateDate.getDate(); 
     var body = JSON.stringify({
         a: this.state.ActivityName,
         b: date,
@@ -125,7 +125,7 @@ showTimePicker = async (stateKey, options) => {
         x: this.state.animals,
         y: this.state.childcare,
         z: this.state.phone});
-     console.warn(body);
+     // console.warn(body);
     fetch('http://10.0.2.2:3000/api/activities/createNewActivity', {
         method: "POST",
         headers: {
@@ -257,7 +257,7 @@ showTimePicker = async (stateKey, options) => {
        <ModalDropdown 
                textStyle ={styles.text}
 
-          options={['Outdoors', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Other']}
+          options={['Outdoors&Nature', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Others']}
           onSelect={(i,v) =>this.setState({activity_type : v}) }
         />
         <Text style={styles.text}>
@@ -267,7 +267,7 @@ showTimePicker = async (stateKey, options) => {
                 textStyle ={styles.text}
 
           options={['Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory']}
-          onSelect={(i,v) =>this.setState({activity_type : v}) }
+          onSelect={(i,v) =>this.setState({disability_type : v}) }
         />
         <Text style={styles.text}>
           *Age range: 
