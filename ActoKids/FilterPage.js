@@ -15,86 +15,62 @@ import {
   Navigator,
   ScrollView,
   TouchableHighlight,
-  View
+  View,
+  DatePickerAndroid
 } from 'react-native';
 //import Filter from './filter';
 import CheckBox from 'react-native-check-box';
+import ModalDropdown from 'react-native-modal-dropdown'
 
 export default class FilterPage extends Component {
     constructor(props) {
     super(props);
-    this.state= { activity_types: ['outdoors', 'sports', 'music', 'zoo', 'art', 'camps', 'museum', 'other'], 
-      disability_types: ['cognitive', 'mobility', 'hearing', 'vision', 'sensory'],
-      day_of_week:['sun', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat'],
-      time_of_day:['morning', 'noon', 'evening'],
-      dataSource :  null
+    this.state= { activity_types: undefined, 
+      disability_types: undefined,
+      dateDate: undefined,
+      dateText: 'Select Date...',
+      cost: undefined,
+      wheelchair_accessible: undefined
       }
   }
+
+  showDatePicker = async (stateKey, options) => {
+    try {
+      var newState = {};
+      const {action, year, month, day} = await DatePickerAndroid.open(options);
+      if (action === DatePickerAndroid.dismissedAction) {
+        newState[stateKey + 'Text'] = 'Not selected';
+      } else {
+        var date = new Date(year, month, day);
+        newState[stateKey + 'Text'] = date.toLocaleDateString();
+        newState[stateKey + 'Date'] = date;
+      }
+      this.setState(newState);
+    } catch ({code, message}) {
+      console.warn(`Error in example '${stateKey}': `, message);
+    }
+  };
+
   _navigateSearch(info){
     this.props.navigator.push({title: 'Search Page', index: 2, 
     passProps : { data: info.data }
     })
   }
 
-  removeFrequency(frequency, index, checked) {
-    if(checked) { 
-       this.state.frequency.append(frequency)
-    } else{
-     this.setState({
-       data: this.state.frequency.filter((_, i) => i !== index)
-     });
-    }
-  }
-
-  removeDay(day, index, checked) {
-    if(checked) { 
-       this.state.day_of_week.append(day)
-    } else{
-     this.setState({
-       data: this.state.day_of_week.filter((_, i) => i !== index)
-     });
-    }
-  }
-
-  removeTime(time, index, checked) {
-    if(checked) { 
-       this.state.time_of_day.append(time)
-    } else{
-     this.setState({
-       data: this.state.time_of_day.filter((_, i) => i !== index)
-     });
-    }
-}
-
-  removeActivity(activity, index, checked) {
-    if(checked) { 
-       this.state.activity_types.append(activity)
-    } else{
-     this.setState({
-       data: this.state.activity_types.filter((_, i) => i !== index)
-     });
-    }
-  }
-
-  removeDisability(disability, index, checked) {
-    if(checked) { 
-       this.state.disability_types.append(disability)
-    } else{
-      this.setState({
-        data: this.state.disability_types.filter((_, i) => i !== index)
-      });
-    }
-}
-
  get_events() {
-    var body = JSON.stringify({
-        activity_type: 'Music',
-        disability_type: 'Physical',
-        frequency: 'once',
-        day_of_week: 'Sunday',
-        time_of_day: 'Morning'
-       });
-    // Alert.alert(body);
+    var body_dic = {}
+    if (typeof this.state.activity_types !== 'undefined')
+        body_dic['activity_type'] = this.state.activity_types
+    if (typeof this.state.disability_types !== 'undefined')
+        body_dic['disability_type'] = this.state.disability_types
+    if (typeof this.state.dateDate !== 'undefined')
+        body_dic['date'] = this.state.dateDate.getFullYear() + '-' + this.state.dateDate.getMonth() + '-' + this.state.dateDate.getDate(); 
+    if (typeof this.state.cost !== 'undefined')
+        body_dic['cost'] = this.state.cost
+    if (typeof this.state.wheelchair_accessible !== 'undefined')
+        body_dic['wheelchair_accessible'] = this.state.wheelchair_accessible
+    var body = JSON.stringify(body_dic);
+
     fetch('http://10.0.2.2:3000/api/activities/findFilteredActivities', {
         method: "POST",
         headers: {
@@ -108,6 +84,14 @@ export default class FilterPage extends Component {
       //   console.log("Response Body -> " + JSON.stringify(resData.body) );
       // } )
       .done();
+  }
+
+   yesNo(v) { 
+    if(v == 'Yes') { 
+      return true;
+    } else { 
+      return false;
+    }
   }
   
   _onBack () { 
@@ -127,155 +111,54 @@ export default class FilterPage extends Component {
         <Text style={ styles.header }>
           Activity Types
         </Text>
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          isChecked={true}
-          onClick={(checked) => { (this.removeActivity('outdoors', this.state.activity_types.indexOf('outdoors'), checked));  }}
-          leftText={'Outdoors & Nature'}
+
+        <ModalDropdown
+          options={['Outdoors', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Other']}
+          onSelect={(i,v) =>this.setState({activity_types : v}) }
         />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeActivity('sports', this.state.activity_types.indexOf('sports'), checked));  }}
-          isChecked={true}
-          leftText={'Sports'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeActivity('music', this.state.activity_types.indexOf('music'), checked)); }}
-          isChecked={true}
-          leftText={'Music'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeActivity('zoo', this.state.activity_types.indexOf('zoo'), checked));  }}
-          isChecked={true}
-          leftText={'Zoo'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeActivity('art', this.state.activity_types.indexOf('art'), checked));  }}
-          isChecked={true}
-          leftText={'Art'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeActivity('camps', this.state.activity_types.indexOf('camps'), checked));  }}
-          isChecked={true}
-          leftText={'Camps'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeActivity('museum', this.state.activity_types.indexOf('museum'), checked));  }}
-          isChecked={true}
-          leftText={'Museum'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeActivity('other', this.state.activity_types.indexOf('other'), checked));  }}
-          isChecked={true}
-          leftText={'Other'}
-        />
-      <Text style={ styles.header }>
+
+        <Text style={ styles.header }>
           Disability Types
         </Text>
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDisability('cognitive', this.state.disability_types.indexOf('cognitive'), checked));  }}
-          isChecked={true}
-          leftText={'Cognitive'}
+        <ModalDropdown
+          options={['Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory']}
+          onSelect={(i,v) =>this.setState({disability_types : v}) }
         />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDisability('mobility', this.state.disability_types.indexOf('mobility'), checked));  }}
-          isChecked={true}
-          leftText={'Mobility'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDisability('hearing', this.state.disability_types.indexOf('hearing'), checked));  }}
-          isChecked={true}
-          leftText={'Hearing'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDisability('vision', this.state.disability_types.indexOf('vision'), checked));  }}
-          isChecked={true}
-          leftText={'Vision'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDisability('sensory', this.state.disability_types.indexOf('sensory'), checked));  }}
-          isChecked={true}
-          leftText={'Sensory'}
-        />
+        
         <Text style={ styles.header }>
-          Day of Week
+          Date
         </Text>
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDay('sunday', this.state.day_of_week.indexOf('sunday'), checked));  }}
-          isChecked={true}
-          leftText={'Sunday'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDay('monday', this.state.day_of_week.indexOf('mnoday'), checked));  }}
-          isChecked={true}
-          leftText={'Monday'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDay('tuesday', this.state.day_of_week.indexOf('tuesday'), checked));  }}
-          isChecked={true}
-          leftText={'Tuesday'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDay('wednesday', this.state.day_of_week.indexOf('wednesday'), checked));  }}
-          isChecked={true}
-          leftText={'Wednesday'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDay('thursday', this.state.day_of_week.indexOf('thursday'), checked));  }}
-          isChecked={true}
-          leftText={'Thursday'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDay('friday', this.state.day_of_week.indexOf('friday'), checked));  }}
-          isChecked={true}
-          leftText={'Friday'}
-        />
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeDay('sat', this.state.day_of_week.indexOf('sat'), checked));  }}
-          isChecked={true}
-          leftText={'Saturday'}
-        />
-       <Text style={ styles.header }>
-          Time of Day
+
+        <TouchableHighlight
+          onPress={this.showDatePicker.bind(this, 'date', {
+              date: this.state.dateDate,
+              minDate: new Date(),
+          })}>
+          <Text>{this.state.dateText}</Text>
+        </TouchableHighlight>
+
+
+        <Text style={ styles.header }>
+          Cost: $
         </Text>
-        <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeTime('morning', this.state.time_of_day.indexOf('morning'), checked));  }}
-          isChecked={true}
-          leftText={'Morning'}
+
+        <TextInput
+          style={{ height: 40, width: 200 }}
+          placeholder="e.g 15.00"
+          onChangeText={(cost) => this.setState({ cost })}
         />
-         <CheckBox
-          style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeTime('noon', this.state.time_of_day.indexOf('noon'), checked));  }}
-          isChecked={true}
-          leftText={'Afternoon'}
+
+        <Text style={ styles.header }>
+          Wheelchair_accessible
+        </Text>
+
+        <ModalDropdown 
+          options={['Yes', 'No']}
+          onSelect={(i,v) => this.setState({wheelchair_accessible : this.yesNo(v) }) } 
         />
-         <CheckBox
-         style={{flex: 1, padding: 10}}
-          onClick={(checked) => { (this.removeTime('evening', this.state.time_of_day.indexOf('evening'), checked));  }}
-          isChecked={true}
-          leftText={'Evening'}
-        />
+
         <Button
-            onPress={ () => this.get_events()}  
+            onPress={ this.get_events.bind(this)}  
             title="Submit"
             accessibilityLabel="Submit"
          />
