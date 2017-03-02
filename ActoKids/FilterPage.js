@@ -64,7 +64,7 @@ export default class FilterPage extends Component {
     if (typeof this.state.disability_types !== 'undefined')
         body_dic['disability_type'] = this.state.disability_types
     if (typeof this.state.dateDate !== 'undefined')
-        body_dic['date'] = this.state.dateDate.getFullYear() + '-' + this.state.dateDate.getMonth() + '-' + this.state.dateDate.getDate(); 
+        body_dic['date'] = this.state.dateDate.getFullYear() + '-' + (this.state.dateDate.getMonth()+1) + '-' + this.state.dateDate.getDate(); 
     if (typeof this.state.cost !== 'undefined')
         body_dic['cost'] = this.state.cost
     if (typeof this.state.wheelchair_accessible !== 'undefined')
@@ -113,7 +113,7 @@ export default class FilterPage extends Component {
         </Text>
 
         <ModalDropdown
-          options={['Outdoors', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Other']}
+          options={['Outdoors&Nature', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Others']}
           onSelect={(i,v) =>this.setState({activity_types : v}) }
         />
 

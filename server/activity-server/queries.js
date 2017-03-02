@@ -133,9 +133,34 @@ function findFilteredActivities(req, res, next) {
   // console.log(req.body);
   var json = req.body;
 
-// var str = 'SELECT * from ' + settings.activity_test_database + " WHERE activity_type = '" + json.activity_type + "' AND disability_type = '"
- // + json.disability_type + "'"; 
-  var str = 'SELECT * from ' + settings.activity_test_database + " WHERE activity_type = 'Zoo' AND disability_type = 'Mobility'";
+  var str = 'SELECT * from ' + settings.activity_test_database;
+  if (json.activity_type !== undefined || json.disability_type !== undefined || json.date !== undefined || json.cost !== undefined || json.wheelchair_accessible !== undefined) {
+    str += ' WHERE';
+  }
+
+  if (json.activity_type !== undefined) {
+    str += ' activity_type = ' + "'" + json.activity_type + "'::activity_options AND ";
+  } 
+  if (json.disability_type !== undefined) {
+    str += ' disability_type = ' + "'" + json.disability_type + "'::disability_options AND ";
+  } 
+  if (json.date !== undefined) {
+    str += ' dates = ' + "('" + json.date + "')::date AND ";
+  } 
+  if (json.cost !== undefined) {
+    str += ' cost <= ' + "money('" + json.cost + "') AND ";
+  } 
+  if (json.wheelchair_accessible !== undefined) {
+    str += ' wheelchair_accessible = ' + "'" + json.wheelchair_accessible + "'::bool AND ";
+  } 
+
+  var pos = str.lastIndexOf(' AND ');
+  if(pos != -1) {
+    str = str.substring(0,pos)
+  }
+  str += ';';
+
+  // console.log(str);
 
  db.any(str, req.body)
     .then(function (data) {
