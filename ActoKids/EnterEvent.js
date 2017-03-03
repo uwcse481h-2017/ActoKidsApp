@@ -288,8 +288,9 @@ showTimePicker = async (stateKey, options) => {
            *Description: 
           </Text> 
           <TextInput
-            style={styles.inputText}
-            placeholder="description"
+            style={{height: 100, width: 300, fontSize: 18,fontFamily: 'serif',}}
+            multiline={true}
+            placeholder="Describe your event"
             onChangeText={(description) => this.setState({ description })}
           />
           <Text style={styles.headerText}>
@@ -316,7 +317,7 @@ showTimePicker = async (stateKey, options) => {
           <ModalDropdown 
             renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
             textStyle ={styles.itemText}
-            options={['Outdoors', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Other']}
+            options={['Outdoors', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Others']}
             onSelect={(i,v) =>this.setState({activity_type : v}) }
           />
           <Text style={styles.headerText}>
@@ -325,7 +326,7 @@ showTimePicker = async (stateKey, options) => {
           <ModalDropdown 
             textStyle ={styles.itemText}
             renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
-            options={['Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory']}
+            options={['Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory', 'Others']}
             onSelect={(i,v) =>this.setState({disability_type : v}) }
           />
           <Text style={styles.headerText}>
@@ -373,7 +374,8 @@ showTimePicker = async (stateKey, options) => {
             Equipment provided: 
           </Text> 
           <TextInput
-            style={styles.inputText}
+            style={{height: 100, width: 300, fontSize: 18,fontFamily: 'serif',}}
+            multiline={true}
             placeholder="List all equipment provided by your organization"
             onChangeText={(equipment_provided) => this.setState({equipment_provided })}
          />

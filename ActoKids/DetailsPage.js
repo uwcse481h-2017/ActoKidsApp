@@ -126,7 +126,7 @@ export default class DetailsPage extends Component {
           ASL Interpreter available:  {this._bool_to_text(this.state.dat.asl_interpreter_available)}
         </Text> 
         <Text style={styles.itemText}>
-          Closed circuit hearing loop: {this._bool_to_text(this.state.dat.closed_circuit_hearing_loop_available)}
+          Closed circuit hearing loop: {this._bool_to_text(this.state.dat.closed_circuit_heering_loop_available)}
         </Text>
         <Text style={styles.itemText}>
           Additional charge for personal care attendant: {this._bool_to_text(this.state.dat.additional_charge)}
@@ -135,7 +135,7 @@ export default class DetailsPage extends Component {
           Can accomodate service animals: {this._bool_to_text(this.state.dat.accomodate_service_animals)}
         </Text> 
         <Text style={styles.itemText}>
-          Childcare onsite:  {this._bool_to_text(this.state.dat.childcare_onsite)}
+          Childcare onsite:  {this._bool_to_text(this.state.dat.onsite_childcare)}
         </Text>
       </ScrollView>
     </View>   
