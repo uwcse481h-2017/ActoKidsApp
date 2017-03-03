@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -16,9 +10,7 @@ import {
   Navigator,
   View
 } from 'react-native';
-//import Filter from './filter';
 import events from './events.json';
- //import SearchBar from 'react-native-searchbar'; 
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -30,59 +22,42 @@ export default class HomePage extends Component {
       this.state = {id: 1, text: '', dataSource: ds.cloneWithRows(obj)};
     }
 
- /*   componentWillMount() {
-      var url = 'http://10.0.2.2:3000/api/activities/getAllActivities'
-
-      fetch(url)
-        .then((res) => res.json())
-        .then((resJson) => {
-          this.setState({dataSource: ds.cloneWithRows(resJson.data)});
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }*/
-
-_onSelect(data) { 
+   _onSelect(data) { 
       this.props.navigator.push({title: 'Details Page', index: 4, 
-      passProps : { data: data}
-})  
-}
-    _navigate (){
+      passProps : { data: data}})  
+  }
+  _navigate (){
       this.props.navigator.push({title: 'Filter Page', index: 3})
-    }
-      _onBack () { 
+  }
+  _onBack () { 
     this.props.navigator.pop();
   }
 
   render() {
     return (     
-    <View>
-     <TouchableHighlight onPress={ () => this._onBack() }>
-          <Text> Back </Text>
+     <View style={styles.outerApp}>  
+     <View style={styles.headerView} > 
+       <TouchableHighlight onPress={ () => this._onBack() }>
+          <Text style={styles.backButton}> Back </Text>
        </TouchableHighlight>
-        <Text style={styles.header}>
-          Welcome to ActoKids!
+        <Text style={styles.titleText}>
+           Search for Events
         </Text>
-         <Button
-            onPress={ () => this._navigate() }
-            title="Filter"
-            accessibilityLabel="Filter"
-          />
-        <TextInput
-          style={{height: 40, width: 200}}
-          placeholder="Search by keyword"
-          onChangeText={(text) => this.setState({text})}
-        />
-       <ListView
+        </View>
+        <TouchableHighlight 
+          onPress={ () => this._navigate() } >
+          <Text style={styles.filterButton}>
+            Click here to filter results
+          </Text>
+        </TouchableHighlight>
+        <ListView style={styles.container}
           dataSource={this.state.dataSource}
           renderRow={(rowData) => 
-            <TouchableHighlight onPress={() => this._onSelect(rowData)} >
-              <Text style={styles.listItem}>{rowData.activity_name}</Text>
-            </TouchableHighlight> } 
+          <TouchableHighlight onPress={() => this._onSelect(rowData)} >
+            <Text style={styles.itemText}>{rowData.activity_name}</Text>
+          </TouchableHighlight> } 
         />
-       </View>      
-       
+       </View>            
     );
   }
 }
@@ -90,16 +65,51 @@ _onSelect(data) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  }, 
-  header: { 
+    backgroundColor: 'lightgray',
+  },
+   outerApp: {
+    flex: 1,
+    backgroundColor: 'green',
+  },
+  titleText:{
+    flex: 2,
+    fontFamily: 'serif',
+    fontSize: 32, 
+    color:'white',
+  },
+  headerText: { 
+    fontFamily: 'serif',
+    fontSize: 27,
+    color: 'black',
+  },
+  itemText: { 
+    fontFamily: 'serif',
+    color:'black',
+    fontSize:22,
+  },
+  backButton: {
+    flex:1,
+    width:75,
+    fontFamily: 'serif',
     fontSize: 20,
-    color: 'purple',
+    color:'white'
   },
-  listItem: { 
+  filterButton:{
+    color:'blue',
+    fontFamily: 'serif',
+    fontSize:22,
+    textAlign: 'center',
+    backgroundColor:'white'
+  },
+  inputText: { 
+    height: 40, 
+    width: 200, 
+    fontFamily: 'serif',
     fontSize: 18,
-  },
-
+  }, 
+  headerView: {         
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: "center",
+}, 
 });

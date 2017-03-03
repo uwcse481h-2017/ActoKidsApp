@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -18,8 +12,7 @@ import {
   View,
   DatePickerAndroid
 } from 'react-native';
-//import Filter from './filter';
-import CheckBox from 'react-native-check-box';
+//import CheckBox from 'react-native-check-box';
 import ModalDropdown from 'react-native-modal-dropdown'
 
 export default class FilterPage extends Component {
@@ -100,64 +93,62 @@ export default class FilterPage extends Component {
 
   render() {
     return (   
-      <View>  
-      <ScrollView>
-      <TouchableHighlight onPress={ () => this._onBack() }>
-          <Text> Back </Text>
-       </TouchableHighlight>
-        <Text style={styles.header}>
-          Welcome to ActoKids!
+    <View style={styles.outerApp}>  
+      <View style={styles.headerView} > 
+        <TouchableHighlight onPress={ () => this._onBack() }>
+          <Text style={styles.backButton}> Back </Text>
+        </TouchableHighlight>
+        <Text style={styles.titleText}>
+          Filter Events
         </Text>
-        <Text style={ styles.header }>
-          Activity Types
+      </View>
+      <ScrollView style={styles.container}>
+        <Text style={ styles.headerText }>
+          Activity Type
         </Text>
-
         <ModalDropdown
+          textStyle ={styles.itemText}
+          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
           options={['Outdoors&Nature', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Others']}
           onSelect={(i,v) =>this.setState({activity_types : v}) }
         />
-
-        <Text style={ styles.header }>
-          Disability Types
+        <Text style={ styles.headerText }>
+          Disability Type
         </Text>
         <ModalDropdown
+          textStyle ={styles.itemText}
+          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
           options={['Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory']}
           onSelect={(i,v) =>this.setState({disability_types : v}) }
         />
-        
-        <Text style={ styles.header }>
+        <Text style={ styles.headerText }>
           Date
         </Text>
-
         <TouchableHighlight
           onPress={this.showDatePicker.bind(this, 'date', {
               date: this.state.dateDate,
               minDate: new Date(),
           })}>
-          <Text>{this.state.dateText}</Text>
+          <Text style={styles.itemText}>{this.state.dateText}</Text>
         </TouchableHighlight>
-
-
-        <Text style={ styles.header }>
+        <Text style={ styles.headerText }>
           Cost: $
         </Text>
-
         <TextInput
           keyboardType = 'numeric'
-          style={{ height: 40, width: 200 }}
+          style={styles.inputText}
           placeholder="e.g 15.00"
           onChangeText={(cost) => this.setState({ cost })}
         />
-
-        <Text style={ styles.header }>
-          Wheelchair_accessible
+        <Text style={ styles.headerText }>
+          Wheelchair Accessible
         </Text>
-
         <ModalDropdown 
+          textStyle ={styles.itemText}
+          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
           options={['Yes', 'No']}
           onSelect={(i,v) => this.setState({wheelchair_accessible : this.yesNo(v) }) } 
         />
-
         <Button
             onPress={ this.get_events.bind(this)}  
             title="Submit"
@@ -172,16 +163,46 @@ export default class FilterPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'lightgray',
   },
-  header: { 
+   outerApp: {
+    flex: 1,
+    backgroundColor: 'green',
+  },
+  titleText:{
+    flex: 2,
+    fontSize: 32, 
+    color:'white',
+    fontFamily: 'serif',
+  },
+  headerText: { 
+    fontSize: 27,
+    color: 'black',    
+    fontFamily: 'serif',
+  },
+  itemText: { 
+    color:'black',    
+    fontFamily: 'serif',
+    fontSize:22,
+  },
+  backButton: {
+    flex:1,
+    width:75,
     fontSize: 20,
-    color: 'purple',
-  }
+    fontFamily: 'serif',
+    color:'white'
+  },
+  inputText: { 
+    height: 40, 
+    width: 200, 
+    fontFamily: 'serif',
+    fontSize: 18,
+  }, 
+  headerView: {         
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: "center",
+}, 
+
 });
 
-
-
-//AppRegistry.registerComponent('ActoKids', () => ActoKids);

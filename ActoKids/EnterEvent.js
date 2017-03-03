@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -21,11 +15,8 @@ import {
   TouchableOpacity,
   Alert
 } from 'react-native';
-//import Filter from './filter';
 import CheckBox from 'react-native-check-box';
 import ModalDropdown from 'react-native-modal-dropdown';
-
-//import SearchBar from 'react-native-searchbar'; 
 
 export default class EnterEvent extends Component {
   constructor(props) {
@@ -34,8 +25,8 @@ export default class EnterEvent extends Component {
     this.state = {
       id: 1, isDateTimePickerVisible: false, ActivityName: '', date: new Date(), time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: false,
       wheelchair_accessible_restroom: false, activity_type: '', disability_type: '', age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
-      sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false, phone: '', startText: 'Select start time', endText: 'Select end time', 
-      dateText: 'Select date', dateDate : new Date()
+      sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false, phone: '', startText: 'Click to select start time', endText: 'Click to select end time', 
+      dateText: 'Click to select date', dateDate : new Date()
     }
 
   }
@@ -72,26 +63,6 @@ showTimePicker = async (stateKey, options) => {
       console.warn(`Error in example '${stateKey}': `, message);
     }
   };
-
-  toggleActivity(activity, index, checked) {
-    if(checked) { 
-       this.state.activity_type.append(activity)
-    } else{
-     this.setState({
-       data: this.state.activity_type.filter((_, i) => i !== index)
-     });
-    }
-  }
-
-  toggleDisability(disability, index, checked) {
-    if(checked) { 
-       this.state.disability_type.append(disability)
-    } else{
-      this.setState({
-        data: this.state.disability_type.filter((_, i) => i !== index)
-      });
-    }
-  }
 
   onSubmitButtonPressed() {
     var startmin = this.state.startHour + this.state.startMinute / 60.0;
@@ -148,220 +119,244 @@ showTimePicker = async (stateKey, options) => {
      } else { 
        return false;
      }
-  }
+   }
 
    _navigate (){
     this.props.navigator.push({title: 'Home Screen', index: 0})
   }
+
   _onBack () { 
     this.props.navigator.pop();
   }
+
   render() {
     return (
-      <ScrollView>
-       <TouchableHighlight onPress={ () => this._onBack() }>
-          <Text> Back </Text>
-       </TouchableHighlight>
-        <Text style={styles.text}>
-          Welcome to ActoKids!
-        </Text>
-        <Text>
-          * required fields
-        </Text>
-        <Text style={styles.text}>
-          *Activity Name:
-        </Text>
-        <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="Activity name..."
-          onChangeText={(ActivityName) => this.setState({ ActivityName })}
+      <View style={styles.outerApp}>
+        <View style={styles.headerView} > 
+          <TouchableHighlight onPress={ () => this._onBack() }>
+            <Text style={styles.backButton}> Back </Text>
+          </TouchableHighlight>
+          <Text style={styles.titleText}>
+            Enter an Activity
+          </Text>
+        </View>
+        <ScrollView style={styles.container}>
+          <Text style ={styles.itemText}>
+            Note: fields marked with (*) are required
+          </Text>
+          <Text style={styles.headerText}>
+            *Activity Name:
+          </Text>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Activity name..."
+            onChangeText={(ActivityName) => this.setState({ ActivityName })}
           />
-         <TouchableHighlight
+          <Text style={styles.headerText}>
+            *Activity Date:
+          </Text>
+          <TouchableHighlight
             onPress={this.showDatePicker.bind(this, 'date', {
-              date: this.state.dateDate,
-              minDate: new Date(),
-            })}>
-            <Text style={styles.text}>{this.state.dateText}</Text>
+            date: this.state.dateDate,
+            minDate: new Date(),
+           })}>
+            <Text style={styles.itemText}>{this.state.dateText}</Text>
           </TouchableHighlight>
-         <TouchableHighlight
+          <Text style={styles.headerText}>
+            *Start Time:
+          </Text>
+          <TouchableHighlight
             onPress={this.showTimePicker.bind(this, 'start', {})}>
-            <Text style={styles.text}> {this.state.startText} </Text>
+            <Text style={styles.itemText}> {this.state.startText} </Text>
           </TouchableHighlight>
+          <Text style={styles.headerText}>
+            *End Time:
+          </Text>
           <TouchableHighlight
             onPress={this.showTimePicker.bind(this, 'end', {})}>
-            <Text style={styles.text}> {this.state.endText} </Text>
+            <Text style={styles.itemText}> {this.state.endText} </Text>
           </TouchableHighlight>
-        <Text style={styles.text}>
-          *Cost:  $
-        </Text> 
-        <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder=""
-          onChangeText={(cost) => this.setState({ cost })}
+          <Text style={styles.headerText}>
+            *Cost:  $
+          </Text> 
+          <TextInput
+            style={styles.inputText}
+            placeholder=""
+            onChangeText={(cost) => this.setState({ cost })}
           />
-        <Text style={styles.text}>
-          *Location: 
-        </Text> 
-        <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="Street address"
-          onChangeText={(street_address) => this.setState({street_address })}
+          <Text style={styles.headerText}>
+            *Location: 
+          </Text> 
+          <TextInput
+            style={styles.inputText}
+            placeholder="Street address"
+            onChangeText={(street_address) => this.setState({street_address })}
           />
           <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="city"
-          onChangeText={(city) => this.setState({ city })}
+            style={styles.inputText}
+            placeholder="city"
+            onChangeText={(city) => this.setState({ city })}
           />
           <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="state"
-          onChangeText={(state) => this.setState({ state })}
+            style={styles.inputText}
+            placeholder="state"
+            onChangeText={(state) => this.setState({ state })}
           />
           <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="country"
-          onChangeText={(country) => this.setState({ country })}
+            style={styles.inputText}
+            placeholder="country"
+            onChangeText={(country) => this.setState({ country })}
           />
           <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="zip code"
-          onChangeText={(zip_code) => this.setState({ zip_code })}
+            style={styles.inputText}
+            placeholder="zip code"
+            onChangeText={(zip_code) => this.setState({ zip_code })}
           />
-        <Text style={styles.text}>
-          *Description: 
-        </Text> 
-        <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="description"
-          onChangeText={(description) => this.setState({ description })}
+          <Text style={styles.headerText}>
+           *Description: 
+          </Text> 
+          <TextInput
+            style={styles.inputText}
+            placeholder="description"
+            onChangeText={(description) => this.setState({ description })}
           />
-        <Text style={styles.text}>
-          *Wheelchair Accessible: 
+          <Text style={styles.headerText}>
+            *Wheelchair Accessible: 
+          </Text> 
+          <ModalDropdown 
+            textStyle ={styles.itemText}
+            renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+            options={['Yes', 'No']}
+            onSelect={(i,v) => this.setState({wheelchair_accessible : this.yesNo(v) }) } 
+          />
+          <Text style={styles.headerText}>
+            *Wheelchair Accessible Restroom: 
+          </Text>
+          <ModalDropdown 
+            renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+            textStyle ={styles.itemText}
+            options={['Yes', 'No']}
+            onSelect={(i,v) =>this.setState({wheelchair_accessible_restroom :  this.yesNo(v)}) }
+          />
+          <Text style={styles.headerText}>
+            *Activity Type: 
+          </Text> 
+          <ModalDropdown 
+            renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+            textStyle ={styles.itemText}
+            options={['Outdoors', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Other']}
+            onSelect={(i,v) =>this.setState({activity_type : v}) }
+          />
+          <Text style={styles.headerText}>
+            *Disability Type: 
+          </Text> 
+          <ModalDropdown 
+            textStyle ={styles.itemText}
+            renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+            options={['Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory']}
+            onSelect={(i,v) =>this.setState({activity_type : v}) }
+          />
+          <Text style={styles.headerText}>
+            *Age range: 
+          </Text> 
+          <TextInput
+            style={styles.inputText}
+            placeholder="[youngest,oldest]"
+            onChangeText={(age_range) => this.setState({age_range })}
+          />
+          <Text style={styles.headerText}>
+            *Parent participation required: 
+          </Text> 
+          <ModalDropdown 
+            renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+            textStyle ={styles.itemText}
+            options={['Yes', 'No']}
+            onSelect={(i,v) =>this.setState({parent_participation : this.yesNo(v)}) }
+          />
+          <Text style={styles.headerText}>
+            *Assistant Provided: 
+          </Text>
+          <ModalDropdown 
+            renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+            textStyle ={styles.itemText}
+            options={['Yes', 'No']}
+            onSelect={(i,v) =>this.setState({assistant : this.yesNo(v)}) }
+          />
+          <Text style={styles.headerText}>
+            *Phone number to call for accessibility questions:
+          </Text>
+          <TextInput
+            style={styles.inputText}
+            placeholder="(xxx)xxx-xxxx"
+            onChangeText={(phone) => this.setState({ phone })}
+          />
+          <Text style={styles.headerText}>
+            Equipment provided: 
+          </Text> 
+          <TextInput
+            style={styles.inputText}
+            placeholder="List all equipment provided by your organization"
+            onChangeText={(equipment_provided) => this.setState({equipment_provided })}
+         />
+         <Text style={styles.headerText}>
+           Sibling participation allowed: 
         </Text> 
         <ModalDropdown 
-        textStyle ={styles.text}
-          options={['Yes', 'No']}
-          onSelect={(i,v) => this.setState({wheelchair_accessible : this.yesNo(v) }) } 
-        />
-        <Text style={styles.text}>
-          *Wheelchair Accessible Restroom: 
-        </Text>
-        <ModalDropdown 
-                textStyle ={styles.text}
-          options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({wheelchair_accessible_restroom :  this.yesNo(v)}) }
-        />
-        <Text style={styles.text}>
-          *Activity Type: 
-        </Text> 
-       <ModalDropdown 
-               textStyle ={styles.text}
-
-          options={['Outdoors&Nature', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Others']}
-          onSelect={(i,v) =>this.setState({activity_type : v}) }
-        />
-        <Text style={styles.text}>
-          *Disability Type: 
-        </Text> 
-        <ModalDropdown 
-                textStyle ={styles.text}
-
-          options={['Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory']}
-          onSelect={(i,v) =>this.setState({disability_type : v}) }
-        />
-        <Text style={styles.text}>
-          *Age range: 
-        </Text> 
-        <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="[youngest,oldest]"
-          onChangeText={(age_range) => this.setState({age_range })}
-          />
-        <Text style={styles.text}>
-          *Parent participation required: 
-        </Text> 
- <ModalDropdown 
-         textStyle ={styles.text}
-          options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({parent_participation : this.yesNo(v)}) }
-        />
-        <Text style={styles.text}>
-          *Assistant Provided: 
-        </Text>
- <ModalDropdown 
-         textStyle ={styles.text}
-          options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({assistant : this.yesNo(v)}) }
-        />
-        <Text style={styles.text}>
-          *Phone number to call for accessibility questions:
-        </Text>
-        <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="(xxx)xxx-xxxx"
-          onChangeText={(phone) => this.setState({ phone })}
-          />
-        <Text style={styles.text}>
-          Equipment provided: 
-        </Text> 
-        <TextInput
-          style={{ height: 40, width: 200 }}
-          placeholder="List all equipment provided by your organization"
-          onChangeText={(equipment_provided) => this.setState({equipment_provided })}
-          />
-        <Text style={styles.text}>
-          Sibling participation allowed: 
-        </Text> 
- <ModalDropdown 
-         textStyle ={styles.text}
+          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+          textStyle ={styles.itemText}
           options={['Yes', 'No']}
           onSelect={(i,v) =>this.setState({sibling : this.yesNo(v)}) }
         />
-        <Text style={styles.text}>
+        <Text style={styles.headerText}>
           Kids to staff ratio: 
         </Text> 
         <TextInput
-          style={{ height: 40, width: 200 }}
+          style={styles.inputText}
           placeholder="e.g 1.5"
           onChangeText={(kids_to_staff) => this.setState({kids_to_staff })}
-          />
-        <Text style={styles.text}>
+        />
+        <Text style={styles.headerText}>
           ASL Interpreter available:  
         </Text> 
- <ModalDropdown 
-                textStyle ={styles.text}
-          options={['Yes', 'No']}
-          onSelect={(i,v) =>this.setState({asl : this.yesNo(v)}) }
+        <ModalDropdown 
+           renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+           textStyle ={styles.itemText}
+           options={['Yes', 'No']}
+           onSelect={(i,v) =>this.setState({asl : this.yesNo(v)}) }
         />
-        <Text style={styles.text}>
+        <Text style={styles.headerText}>
           Closed circuit hearing loop:
         </Text>
- <ModalDropdown 
-         textStyle ={styles.text}
+        <ModalDropdown 
+          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+          textStyle ={styles.itemText}
           options={['Yes', 'No']}
           onSelect={(i,v) =>this.setState({closed_circuit : this.yesNo(v)}) }
         />
-        <Text style={styles.text}>
+        <Text style={styles.headerText}>
           Additional charge for personal care attendant:
         </Text>
- <ModalDropdown 
-         textStyle ={styles.text}
+        <ModalDropdown 
+          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+          textStyle ={styles.itemText}
           options={['Yes', 'No']}
           onSelect={(i,v) =>this.setState({add_charge : this.yesNo(v)}) }
         />
-        <Text style={styles.text}>
+        <Text style={styles.headerText}>
           Can accomodate service animals:
         </Text> 
- <ModalDropdown 
-         textStyle ={styles.text}
+        <ModalDropdown 
+          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+          textStyle ={styles.itemText}
           options={['Yes', 'No']}
           onSelect={(i,v) =>this.setState({animals : this.yesNo(v)}) }
         />
-        <Text style={styles.text}>
+        <Text style={styles.headerText}>
           Childcare onsite:  
         </Text>
-   <ModalDropdown 
-         textStyle ={styles.text}
+        <ModalDropdown 
+          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
+          textStyle ={styles.itemText}
           options={['Yes', 'No']}
           onSelect={(i,v) =>this.setState({childcare : this.yesNo(v)}) }
         />
@@ -371,7 +366,7 @@ showTimePicker = async (stateKey, options) => {
           accessibilityLabel="Submit"
         />
       </ScrollView>
-
+    </View>
     );
   }
 }
@@ -379,27 +374,48 @@ showTimePicker = async (stateKey, options) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'lightgray',
+  },
+   outerApp: {
+    flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'green',
   },
-  text: { 
+  titleText:{
+    flex: 2,
+    fontSize: 32, 
+    color:'white',
+    fontFamily: 'serif',
+  },
+  headerText: { 
+    fontSize: 27,
+    color: 'black',
+    fontFamily: 'serif',
+  },
+  itemText: { 
+    color:'black',
+    fontSize:22,
+     fontFamily: 'serif',
+  },
+  backButton: {
+    flex:1,
+    width:75,
+    fontFamily: 'serif',
     fontSize: 20,
-    color: 'purple',
+    color:'white'
+  },
+  inputText: { 
+    height: 40, 
+    width: 200, 
+    fontSize: 18,
+    fontFamily: 'serif',
+  }, 
+  headerView: {         
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: "center",
+}, 
 
-  }
 });
 
-
-//AppRegistry.registerComponent('ActoKids', () => ActoKids);
-
-
-/**<TouchableOpacity onPress={this._showDateTimePicker}>
-          <Text>Select Start Time and Date</Text>
-        </TouchableOpacity>
-        <DateTimePicker
-          isVisible={this.state.isDateTimePickerVisible}
-          onConfirm={(date)=>{this.setState({start_date}); this._handleDatePicked}}
-          onCancel={this._hideDateTimePicker}
-          mode={'datetime'}
-        /> */

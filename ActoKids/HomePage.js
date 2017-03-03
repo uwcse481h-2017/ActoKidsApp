@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -12,21 +6,19 @@ import {
   TextInput,
   ListView,
   Button,
+  TouchableHighlight,
   Navigator,
   View
 } from 'react-native';
 import SearchPage from './SearchPage';
 import EnterEvent from './EnterEvent';
 
- //import SearchBar from 'react-native-searchbar'; 
-
 export default class HomePage extends Component {
     constructor(props) {
     super(props);
       this.state = {id: 1, text: '',
         dataSource: null
-      }
-   
+      } 
   }
 
 _navigateSearch(info){
@@ -55,20 +47,23 @@ get_events() {
 
   render() {
     return (     
-    <View>
-        <Text>
+    <View style={styles.container}>
+      <View style={styles.outerApp}>
+        <Text style={styles.titleText}>
           Welcome to ActoKids!
         </Text>
-         <Button
-            onPress={ () => this.get_events() } 
-            title="Search For An Activity"
-            accessibilityLabel="Search"
-          />
-        <Button
-            onPress={ () => this._navigateEvent() }
-            title="Enter An Activity"
-            accessibilityLabel="Enter an activity"
-          />
+        </View>
+        <Text style={styles.inputText} >
+          This app was created to help connect children with disabilites to community events that are suitable for them.
+        </Text>
+         <TouchableHighlight
+            onPress={ () => this.get_events() } >
+            <Text style={styles.itemText}>  If you would like to search for an activity, click here </Text>
+        </TouchableHighlight>
+         <TouchableHighlight
+            onPress={ () => this._navigateEvent() } >
+            <Text style={styles.itemText}> If you are an organizer who would like to add an activity to our database, click here </Text>
+        </TouchableHighlight>
        </View>      
        
     );
@@ -77,9 +72,47 @@ get_events() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, 
+    backgroundColor: 'lightgray',
+  },
+   outerApp: {
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'white',
-  }
+    backgroundColor: 'green',
+  },
+  titleText:{
+    fontFamily: 'serif',
+    fontSize: 32, 
+    color:'white',
+  },
+  headerText: { 
+    fontSize: 27,
+    fontFamily: 'serif',
+    color: 'black',
+  },
+  itemText: { 
+    color:'blue',
+    fontFamily: 'serif',
+    fontSize:22,
+    textAlign: 'center',
+  },
+  backButton: {
+    flex:1,
+    width:75,
+    fontFamily: 'serif',
+    fontSize: 20,
+    color:'white'
+  },
+  inputText: {  
+    fontFamily: 'serif',
+    fontSize: 22,
+    color: 'black',
+    textAlign: 'center',
+  }, 
+  headerView: {         
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: "center",
+}, 
+
 });
