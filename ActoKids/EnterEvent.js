@@ -25,7 +25,7 @@ export default class EnterEvent extends Component {
     this.state = {
       id: 1, isDateTimePickerVisible: false, ActivityName: '', date: new Date(), time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: '',
       wheelchair_accessible_restroom: '', activity_type: '', disability_type: '', age_range : '', parent_participation: '', assistant: '', equipment_provided: '',
-      sibling: '', kids_to_staff: '', asl: '', closed_circuit: '', add_charge: '', childcare: '', animals: '', phone: '', startText: 'Click to select start time', endText: 'Click to select end time', 
+      sibling: null, kids_to_staff: '', asl: null, closed_circuit: null, add_charge: null, childcare: null, animals: null, phone: '', startText: 'Click to select start time', endText: 'Click to select end time', 
       dateText: 'Click to select date', dateDate : new Date(), start_age: -1, end_age: -1, selected: ''
     }
 

@@ -51,15 +51,15 @@ export default class DetailsPage extends Component {
     arr.concat(["12"])
     var start = (""+arr[0]).split(".");
     var end = (""+arr[1]).split(".");
-    var startMin = 1.0*start[1]/100*60 +""; 
-    var endMin = 1.0*end[1]/100*60 + "";
+    var startMin = start[1]*60 *100 + ""; 
+    var endMin = end[1]*60 *100 +"";
     if(startMin.length < 2){ 
       startMin =startMin+"0";
     } 
     if(endMin.length < 2){ 
       endMin =endMin+"0";
     } 
-    return start[0] + ":" + startMin + "-" + end[0]+":"+endMin; 
+    return start[0] + ":" + startMin.substr(0,2) + "-" + end[0]+":"+endMin.substr(0,2); 
   }
 
   render() {
