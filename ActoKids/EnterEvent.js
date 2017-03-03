@@ -23,10 +23,10 @@ export default class EnterEvent extends Component {
     super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      id: 1, isDateTimePickerVisible: false, ActivityName: '', date: new Date(), time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: false,
-      wheelchair_accessible_restroom: false, activity_type: '', disability_type: '', age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
-      sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false, phone: '', startText: 'Click to select start time', endText: 'Click to select end time', 
-      dateText: 'Click to select date', dateDate : new Date(), start_age: 0, end_age: 0, selected: false
+      id: 1, isDateTimePickerVisible: false, ActivityName: '', date: new Date(), time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: '',
+      wheelchair_accessible_restroom: '', activity_type: '', disability_type: '', age_range : '', parent_participation: '', assistant: '', equipment_provided: '',
+      sibling: '', kids_to_staff: '', asl: '', closed_circuit: '', add_charge: '', childcare: '', animals: '', phone: '', startText: 'Click to select start time', endText: 'Click to select end time', 
+      dateText: 'Click to select date', dateDate : new Date(), start_age: -1, end_age: -1, selected: ''
     }
 
   }
@@ -65,6 +65,7 @@ showTimePicker = async (stateKey, options) => {
   };
 
   onSubmitButtonPressed() {
+    if(this.check_submission) { 
     var startmin = this.state.startHour + this.state.startMinute / 60.0;
     var endmin = this.state.endHour + this.state.endMinute/60.0;
     var time = "(" + startmin + "," + endmin +")"; 
@@ -112,7 +113,8 @@ showTimePicker = async (stateKey, options) => {
       .done();
 
       this._navigate()
-  }
+    }  
+}
 
    yesNo(v) { 
      if(v == 'Yes') { 
@@ -133,46 +135,66 @@ showTimePicker = async (stateKey, options) => {
   check_submission() { 
     if(this.state.ActivityName.length < 1) { 
       Alert.alert("Must enter activity name");
+      return false;
     } else if(this.state.dateDate== new Date()) { 
       Alert.alert("Must enter a date after today");
+      return false;
     } else if (this.state.startText == 'Click to select start time' || this.state.startText == 'dismissed') {
       Alert.alert("Must enter start time");
+      return false;
     } else if (this.state.endText == 'Click to select end time' || this.state.endText == 'dismissed') {
       Alert.alert("Must enter end time");
+      return false;
     } else if (this.state.cost.length < 1) { 
       Alert.alert("Must enter cost");
+      return false;
     } else if (this.state.street_address.length < 1) { 
       Alert.alert("Must enter street address");
+      return false;
     } else if (this.state.city.length < 1) { 
       Alert.alert("Must enter city");
+      return false;
     } else if (this.state.state.length < 1) { 
       Alert.alert("Must enter state");
+      return false;
     } else if (this.state.country.length < 1) { 
       Alert.alert("Must enter country");
+      return false;
     } else if (this.state.zip_code.length < 1) { 
       Alert.alert("Must enter zip code");
+      return false;
     } else if (this.state.wheelchair_accessible.length < 1) { 
       Alert.alert("Must enter wheelchair accessible");
+      return false;
     } else if (this.state.wheelchair_accessible_restroom.length < 1) { 
       Alert.alert("Must enter wheelchair accessible restroom");
+      return false;
     } else if (this.state.activity_type.length < 1) { 
       Alert.alert("Must enter activity type");
+      return false;
     } else if (this.state.disability_type.length < 1) { 
       Alert.alert("Must enter disability type");
+      return false;
     } else if (this.state.parent_participation.length < 1) { 
       Alert.alert("Must enter parent participation required");
+      return false;
     } else if (this.state.assistant.length < 1) { 
       Alert.alert("Must enter assistant provided");
+      return false;
     } else if (this.state.phone.length < 1) { 
       Alert.alert("Must enter phone number to call for accessibility questions");
-    } else if (this.start_age.length < 1) { 
+      return false;
+    } else if (this.start_age < 0) { 
       Alert.alert("Must enter youngest age");
-    } else if (this.end_age.length < 1) { 
+      return false;
+    } else if (this.end_age < 0) { 
       Alert.alert("Must enter oldest age");
+      return false;
     } else if (this.end_age < this.start_age) { 
       Alert.alert("Oldest age must be older than youngest age");
-    }else { 
-      this.onSubmitButtonPressed.bind(this); 
+      return false;
+    } else { 
+      return true;
     }
     
   }
@@ -304,7 +326,7 @@ showTimePicker = async (stateKey, options) => {
             textStyle ={styles.itemText}
             renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
             options={['Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory']}
-            onSelect={(i,v) =>this.setState({activity_type : v}) }
+            onSelect={(i,v) =>this.setState({disability_type : v}) }
           />
           <Text style={styles.headerText}>
             *Age range: 
@@ -419,7 +441,7 @@ showTimePicker = async (stateKey, options) => {
           onSelect={(i,v) =>this.setState({childcare : this.yesNo(v)}) }
         />
         <Button
-          onPress={()=> this.check_submission()}
+          onPress={this.onSubmitButtonPressed.bind(this)}
           title="Submit"
           accessibilityLabel="Submit"
         />
