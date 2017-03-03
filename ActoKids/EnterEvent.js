@@ -26,7 +26,7 @@ export default class EnterEvent extends Component {
       id: 1, isDateTimePickerVisible: false, ActivityName: '', date: new Date(), time: '', cost: '', description: '', street_address: '', city: '', state: '', country:'', zip_code:'', wheelchair_accessible: false,
       wheelchair_accessible_restroom: false, activity_type: '', disability_type: '', age_range : '', parent_participation: false, assistant: false, equipment_provided: '',
       sibling: false, kids_to_staff: '', asl: false, closed_circuit: false, add_charge: false, childcare: false, animals: false, phone: '', startText: 'Click to select start time', endText: 'Click to select end time', 
-      dateText: 'Click to select date', dateDate : new Date()
+      dateText: 'Click to select date', dateDate : new Date(), start_age: 0, end_age: 0, selected: false
     }
 
   }
@@ -69,6 +69,7 @@ showTimePicker = async (stateKey, options) => {
     var endmin = this.state.endHour + this.state.endMinute/60.0;
     var time = "(" + startmin + "," + endmin +")"; 
     var date = this.state.dateDate.getFullYear() + '-' + (this.state.dateDate.getMonth()+1) + '-' + this.state.dateDate.getDate(); 
+    var age_range = "["+this.state.start_age+","+this.state.end_age+"]";
     var body = JSON.stringify({
         a: this.state.ActivityName,
         b: date,
@@ -83,7 +84,7 @@ showTimePicker = async (stateKey, options) => {
         k: this.state.wheelchair_accessible,
         l: this.state.activity_type,
         m: this.state.disability_type,
-        n: this.state.age_range,
+        n: age_range,
         o: this.state.parent_participation,
         p: this.state.assistant,
         q: this.state.wheelchair_accessible_restroom,
@@ -127,6 +128,53 @@ showTimePicker = async (stateKey, options) => {
 
   _onBack () { 
     this.props.navigator.pop();
+  }
+
+  check_submission() { 
+    if(this.state.ActivityName.length < 1) { 
+      Alert.alert("Must enter activity name");
+    } else if(this.state.dateDate== new Date()) { 
+      Alert.alert("Must enter a date after today");
+    } else if (this.state.startText == 'Click to select start time' || this.state.startText == 'dismissed') {
+      Alert.alert("Must enter start time");
+    } else if (this.state.endText == 'Click to select end time' || this.state.endText == 'dismissed') {
+      Alert.alert("Must enter end time");
+    } else if (this.state.cost.length < 1) { 
+      Alert.alert("Must enter cost");
+    } else if (this.state.street_address.length < 1) { 
+      Alert.alert("Must enter street address");
+    } else if (this.state.city.length < 1) { 
+      Alert.alert("Must enter city");
+    } else if (this.state.state.length < 1) { 
+      Alert.alert("Must enter state");
+    } else if (this.state.country.length < 1) { 
+      Alert.alert("Must enter country");
+    } else if (this.state.zip_code.length < 1) { 
+      Alert.alert("Must enter zip code");
+    } else if (this.state.wheelchair_accessible.length < 1) { 
+      Alert.alert("Must enter wheelchair accessible");
+    } else if (this.state.wheelchair_accessible_restroom.length < 1) { 
+      Alert.alert("Must enter wheelchair accessible restroom");
+    } else if (this.state.activity_type.length < 1) { 
+      Alert.alert("Must enter activity type");
+    } else if (this.state.disability_type.length < 1) { 
+      Alert.alert("Must enter disability type");
+    } else if (this.state.parent_participation.length < 1) { 
+      Alert.alert("Must enter parent participation required");
+    } else if (this.state.assistant.length < 1) { 
+      Alert.alert("Must enter assistant provided");
+    } else if (this.state.phone.length < 1) { 
+      Alert.alert("Must enter phone number to call for accessibility questions");
+    } else if (this.start_age.length < 1) { 
+      Alert.alert("Must enter youngest age");
+    } else if (this.end_age.length < 1) { 
+      Alert.alert("Must enter oldest age");
+    } else if (this.end_age < this.start_age) { 
+      Alert.alert("Oldest age must be older than youngest age");
+    }else { 
+      this.onSubmitButtonPressed.bind(this); 
+    }
+    
   }
 
   render() {
@@ -180,9 +228,10 @@ showTimePicker = async (stateKey, options) => {
             *Cost:  $
           </Text> 
           <TextInput
+            keyboardType = 'numeric'
             style={styles.inputText}
-            placeholder=""
-            onChangeText={(cost) => this.setState({ cost })}
+            placeholder="15.00"
+            onChangeText={(cost) => this.setState({ cost : cost })}
           />
           <Text style={styles.headerText}>
             *Location: 
@@ -194,23 +243,24 @@ showTimePicker = async (stateKey, options) => {
           />
           <TextInput
             style={styles.inputText}
-            placeholder="city"
+            placeholder="City"
             onChangeText={(city) => this.setState({ city })}
           />
           <TextInput
             style={styles.inputText}
-            placeholder="state"
+            placeholder="State"
             onChangeText={(state) => this.setState({ state })}
           />
           <TextInput
             style={styles.inputText}
-            placeholder="country"
+            placeholder="Country"
             onChangeText={(country) => this.setState({ country })}
           />
           <TextInput
+            keyboardType = 'numeric'
             style={styles.inputText}
-            placeholder="zip code"
-            onChangeText={(zip_code) => this.setState({ zip_code })}
+            placeholder="Zip code"
+            onChangeText={(zip) => this.setState({ zip_code : zip })}
           />
           <Text style={styles.headerText}>
            *Description: 
@@ -260,9 +310,16 @@ showTimePicker = async (stateKey, options) => {
             *Age range: 
           </Text> 
           <TextInput
+            keyboardType = 'numeric'
             style={styles.inputText}
-            placeholder="[youngest,oldest]"
-            onChangeText={(age_range) => this.setState({age_range })}
+            placeholder="Youngest"
+            onChangeText={(age) => this.setState({ start_age : age })}
+          />
+          <TextInput
+            keyboardType = 'numeric'
+            style={styles.inputText}
+            placeholder="Oldest"
+            onChangeText={(age) => this.setState({ end_age : age})}
           />
           <Text style={styles.headerText}>
             *Parent participation required: 
@@ -310,11 +367,12 @@ showTimePicker = async (stateKey, options) => {
         <Text style={styles.headerText}>
           Kids to staff ratio: 
         </Text> 
-        <TextInput
-          style={styles.inputText}
-          placeholder="e.g 1.5"
-          onChangeText={(kids_to_staff) => this.setState({kids_to_staff })}
-        />
+          <TextInput
+            keyboardType = 'numeric'
+            style={styles.inputText}
+            placeholder="e.g. 1.5"
+            onChangeText={(ratio) => this.setState({ kids_to_staff : ratio })}
+          />
         <Text style={styles.headerText}>
           ASL Interpreter available:  
         </Text> 
@@ -361,7 +419,7 @@ showTimePicker = async (stateKey, options) => {
           onSelect={(i,v) =>this.setState({childcare : this.yesNo(v)}) }
         />
         <Button
-          onPress={ this.onSubmitButtonPressed.bind(this) }
+          onPress={()=> this.check_submission()}
           title="Submit"
           accessibilityLabel="Submit"
         />
