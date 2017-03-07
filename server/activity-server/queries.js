@@ -63,7 +63,7 @@ function getAllActivities(req, res, next) {
 // ${asl_interpreter_available} coms as string. Either 'true' or 'false'
 // ${closed_circuit_heering_loop_available} coms as string. Either 'true' or 'false'
 // ${additional_charge} coms as string. Either 'true' or 'false'
-// ${accomodate_service_animals} coms as string. Either 'true' or 'false'
+// ${accommodate_service_animals} coms as string. Either 'true' or 'false'
 // ${onsite_childcare} coms as string. Either 'true' or 'false'
 //
 // create a new activity
@@ -102,7 +102,7 @@ function createNewActivity(req, res, next) {
   + 'descriptions, wheelchair_accessible, activity_type, disability_type, age_range,'
   + 'parent_participation_required, assistant_provided, disability_restrooms_available,'
   + 'equipment_provided, sibling_participation, kids_to_staff_ratio, asl_interpreter_available,'
-  + 'closed_circuit_heering_loop_available, additional_charge, accomodate_service_animals,'
+  + 'closed_circuit_hearing_loop_available, additional_charge, accommodate_service_animals,'
   + 'onsite_childcare)'
   + " values('" + a + "', '(" + b + ")'::date, numrange('" + c + "'), money('" + d + "'), '" + e + "', '" + f + "', '" + g + "'"
   + ", '" + h + "', '" + i + "'::integer, '" + z + "', '" + j + "', '" + k + "'::bool, '" + l + "'::activity_options"
