@@ -317,7 +317,7 @@ showTimePicker = async (stateKey, options) => {
           <ModalDropdown 
             renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
             textStyle ={styles.itemText}
-            options={['Outdoors', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Others']}
+            options={['Outdoors&Nature', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Others']}
             onSelect={(i,v) =>this.setState({activity_type : v}) }
           />
           <Text style={styles.headerText}>

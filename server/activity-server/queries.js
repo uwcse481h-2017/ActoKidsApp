@@ -78,7 +78,7 @@ function createNewActivity(req, res, next) {
   var f = json.f;
   var g = json.g;
   var h = json.h;
-  var i = json.i;
+  var i = json.i; // zipcode
   var j = json.j;
   var k = json.k;
   var l = json.l;
@@ -87,15 +87,22 @@ function createNewActivity(req, res, next) {
   var o = json.o;
   var p = json.p;
   var q = json.q;
-  var r = json.r;
-  var s = json.s;
-  var t = json.t;
-  var u = json.u;
-  var v = json.v;
-  var w = json.w;
-  var x = json.x;
-  var y = json.y;
+  var r = json.r; // equipment_provided
+  var s = json.s; // sibling_participation
+  var t = json.t; // kids to staff ratio
+  var u = json.u; // asl_interpreter_available
+  var v = json.v; // cchl available
+  var w = json.w; // additional_charge
+  var x = json.x; // accommodate_service_animals
+  var y = json.y; // onsite_childcare
   var z = json.z;
+
+  if(i == '') {
+    i = '-1';
+  }
+  if(t == '') {
+    t = '-1'
+  }
 
   var str = 'INSERT INTO '+ settings.activity_test_database
   + '(activity_name, dates, time_of_day, cost, street_name, city, state, country, zip_code, phone_number,'
@@ -107,11 +114,48 @@ function createNewActivity(req, res, next) {
   + " values('" + a + "', '(" + b + ")'::date, numrange('" + c + "'), money('" + d + "'), '" + e + "', '" + f + "', '" + g + "'"
   + ", '" + h + "', '" + i + "'::integer, '" + z + "', '" + j + "', '" + k + "'::bool, '" + l + "'::activity_options"
   + ", '" + m + "'::disability_options, '" + n + "'::int4range, '" + o + "'::bool, '" + p + "'::bool"
-  + ", '" + q + "'::bool, '" + r + "', '" + s + "'::bool"
-  + ", '" + t + "'::real, '" + u + "'::bool, '" + v + "'::bool"
-  + ", '" + w + "'::bool, '" + x + "'::bool, '" + y + "'::bool)";
+  + ", '" + q + "'::bool, '" + r + "',";
 
-  // console.log(str);
+  if(s == null) {
+    str += "null::bool,";
+  } else {
+    str += "'" + s + "'::bool,";
+  }
+
+  str += "'" + t + "'::real,";
+
+  
+  if(u == null) {
+    str += 'null::bool,';
+  } else {
+    str += "'" + u + "'::bool,";
+  }
+
+  if(v == null) {
+    str += 'null::bool,';
+  } else {
+    str += "'" + v + "'::bool,";
+  }
+  
+  if(w == null) {
+    str += 'null::bool,';
+  } else {
+    str += "'" + w + "'::bool,";
+  }
+
+  if(x == null) {
+    str += 'null::bool,';
+  } else {
+    str += "'" + x + "'::bool,";
+  }
+
+  if(y == null) {
+    str += 'null::bool);';
+  } else {
+    str += "'" + y + "'::bool);";
+  }
+
+  console.log(str);
 
   db.none(str, req.body)
     .then(function () {
