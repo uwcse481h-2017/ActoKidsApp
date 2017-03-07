@@ -65,10 +65,15 @@ export default class DetailsPage extends Component {
   render() {
     return (     
     <View style={styles.outerApp}>
+       <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>
+         <Button 
+           onPress={() => this._onBack()}
+           title="Back"
+           color="darkgray"
+           accessibilityLabel="Back"
+        />
+        </View>
       <View style={styles.headerView} > 
-       <TouchableHighlight onPress={ () => this._onBack() }>
-          <Text style={styles.backButton}> Back </Text>
-       </TouchableHighlight>
         <Text style={styles.titleText}>
           {this.state.dat.activity_name}
         </Text>
@@ -151,7 +156,6 @@ const styles = StyleSheet.create({
    outerApp: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'center',
     backgroundColor: 'green',
   },
   titleText:{
@@ -159,6 +163,8 @@ const styles = StyleSheet.create({
     fontSize: 32, 
     color:'white',
     fontFamily: 'serif',
+    textAlign: 'center'
+
   },
   headerText: { 
     fontSize: 18,

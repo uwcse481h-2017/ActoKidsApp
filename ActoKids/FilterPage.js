@@ -94,15 +94,23 @@ export default class FilterPage extends Component {
   render() {
     return (   
     <View style={styles.outerApp}>  
+      <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>
+         <Button 
+           onPress={() => this._onBack()}
+           title="Back"
+           color="darkgray"
+           accessibilityLabel="Back"
+        />
+        </View>
       <View style={styles.headerView} > 
-        <TouchableHighlight onPress={ () => this._onBack() }>
-          <Text style={styles.backButton}> Back </Text>
-        </TouchableHighlight>
         <Text style={styles.titleText}>
           Filter Events
         </Text>
       </View>
       <ScrollView style={styles.container}>
+        <Text style ={{fontSize: 18, textAlign:'center', fontFamily: 'serif'}}>
+            Fill in the following options and click 'submit' to find activities that match your needs
+        </Text>
         <Text style={ styles.headerText }>
           Activity Type
         </Text>
@@ -150,7 +158,8 @@ export default class FilterPage extends Component {
           onSelect={(i,v) => this.setState({wheelchair_accessible : this.yesNo(v) }) } 
         />
         <Button
-            onPress={ this.get_events.bind(this)}  
+            onPress={ this.get_events.bind(this)} 
+            color="purple" 
             title="Submit"
             accessibilityLabel="Submit"
          />
@@ -174,6 +183,8 @@ const styles = StyleSheet.create({
     fontSize: 32, 
     color:'white',
     fontFamily: 'serif',
+    textAlign: 'center'
+
   },
   headerText: { 
     fontSize: 27,

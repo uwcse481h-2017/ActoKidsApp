@@ -36,26 +36,39 @@ export default class HomePage extends Component {
   render() {
     return (     
      <View style={styles.outerApp}>  
-     <View style={styles.headerView} > 
-       <TouchableHighlight onPress={ () => this._onBack() }>
-          <Text style={styles.backButton}> Back </Text>
-       </TouchableHighlight>
+       <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>
+         <Button 
+           onPress={() => this._onBack()}
+           title="Back"
+           color="darkgray"
+           accessibilityLabel="Back"
+        />
+        </View>
+       <View style={styles.headerView} > 
         <Text style={styles.titleText}>
            Search for Events
         </Text>
         </View>
-        <TouchableHighlight 
-          onPress={ () => this._navigate() } >
-          <Text style={styles.filterButton}>
-            Click here to filter results
-          </Text>
-        </TouchableHighlight>
+        <View style = {{height:50, justifyContent: 'center', backgroundColor: 'lightgray',}}>
+          <Button
+            onPress={ () => this._navigate() } 
+            color="purple" 
+            title="Click here to filter results"
+            accessibilityLabel="Click here to filter results"
+          />
+        </View>
+        <Text style ={{fontSize: 18, textAlign:'center', fontFamily: 'serif', backgroundColor:'lightgray'}}>
+          Search our database for an event. Click the filter button get more specific results. 
+        </Text>
         <ListView style={styles.container}
           dataSource={this.state.dataSource}
           renderRow={(rowData) => 
           <TouchableHighlight onPress={() => this._onSelect(rowData)} >
             <Text style={styles.itemText}>{rowData.activity_name}</Text>
-          </TouchableHighlight> } 
+          </TouchableHighlight> }
+
+          
+           
         />
        </View>            
     );
@@ -72,15 +85,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   },
   titleText:{
-    flex: 2,
+    flex: 1,
     fontFamily: 'serif',
     fontSize: 32, 
     color:'white',
+    textAlign: 'center'
   },
   headerText: { 
     fontFamily: 'serif',
     fontSize: 27,
     color: 'black',
+    
   },
   itemText: { 
     fontFamily: 'serif',
@@ -107,9 +122,9 @@ const styles = StyleSheet.create({
     fontFamily: 'serif',
     fontSize: 18,
   }, 
-  headerView: {         
+  headerView: {   
     flexDirection:'row',
     alignItems: 'center',
-    justifyContent: "center",
+    justifyContent: 'center',
 }, 
 });

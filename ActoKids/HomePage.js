@@ -56,14 +56,21 @@ get_events() {
         <Text style={styles.inputText} >
           This app was created to help connect children with disabilites to community events that are suitable for them.
         </Text>
-         <TouchableHighlight
-            onPress={ () => this.get_events() } >
-            <Text style={styles.itemText}>  If you would like to search for an activity, click here </Text>
-        </TouchableHighlight>
-         <TouchableHighlight
-            onPress={ () => this._navigateEvent() } >
-            <Text style={styles.itemText}> If you are an organizer who would like to add an activity to our database, click here </Text>
-        </TouchableHighlight>
+        <View style = {{height: 100, justifyContent: 'center'}}>
+          <Button
+            onPress={ () => this.get_events() }  
+            color="purple"
+            title="If you would like to search for an activity, click here"
+            accessibilityLabel="If you would like to search for an activity, click here"
+          />     
+        </View>  
+        <Button
+          onPress={ () => this._navigateEvent()}  
+          color="purple"
+          title="If you are an organizer who would like to add an activity to our database, click here "
+          accessibilityLabel="If you are an organizer who would like to add an activity to our database, click here "
+        />
+
        </View>      
        
     );

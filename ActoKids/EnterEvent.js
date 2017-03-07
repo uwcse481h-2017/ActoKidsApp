@@ -64,8 +64,7 @@ showTimePicker = async (stateKey, options) => {
     }
   };
 
-  onSubmitButtonPressed() {
-    if(this.check_submission) { 
+  onSubmitButtonPressed() { 
     var startmin = this.state.startHour + this.state.startMinute / 60.0;
     var endmin = this.state.endHour + this.state.endMinute/60.0;
     var time = "(" + startmin + "," + endmin +")"; 
@@ -107,13 +106,13 @@ showTimePicker = async (stateKey, options) => {
         body: body
       })
       // .then( (res)=> res.json() )
-      // .then( (resData) => {
-      //   console.log("Response Body -> " + JSON.stringify(resData.body) );
+       //  .then( (resData) => {
+       //  Alert.alert(JSON.stringify(resData.message) );
       // } )
       .done();
 
       this._navigate()
-    }  
+    
 }
 
    yesNo(v) { 
@@ -135,66 +134,48 @@ showTimePicker = async (stateKey, options) => {
   check_submission() { 
     if(this.state.ActivityName.length < 1) { 
       Alert.alert("Must enter activity name");
-      return false;
-    } else if(this.state.dateDate== new Date()) { 
-      Alert.alert("Must enter a date after today");
-      return false;
+    } else if(this.state.dateText == 'Click to select date') { 
+      Alert.alert("Must enter a date");
     } else if (this.state.startText == 'Click to select start time' || this.state.startText == 'dismissed') {
       Alert.alert("Must enter start time");
-      return false;
     } else if (this.state.endText == 'Click to select end time' || this.state.endText == 'dismissed') {
       Alert.alert("Must enter end time");
-      return false;
     } else if (this.state.cost.length < 1) { 
       Alert.alert("Must enter cost");
-      return false;
     } else if (this.state.street_address.length < 1) { 
       Alert.alert("Must enter street address");
-      return false;
     } else if (this.state.city.length < 1) { 
       Alert.alert("Must enter city");
-      return false;
     } else if (this.state.state.length < 1) { 
       Alert.alert("Must enter state");
-      return false;
     } else if (this.state.country.length < 1) { 
       Alert.alert("Must enter country");
-      return false;
     } else if (this.state.zip_code.length < 1) { 
       Alert.alert("Must enter zip code");
-      return false;
+    } else if (this.state.description.length < 1) { 
+      Alert.alert("Must enter event description");
     } else if (this.state.wheelchair_accessible.length < 1) { 
       Alert.alert("Must enter wheelchair accessible");
-      return false;
     } else if (this.state.wheelchair_accessible_restroom.length < 1) { 
       Alert.alert("Must enter wheelchair accessible restroom");
-      return false;
     } else if (this.state.activity_type.length < 1) { 
       Alert.alert("Must enter activity type");
-      return false;
     } else if (this.state.disability_type.length < 1) { 
       Alert.alert("Must enter disability type");
-      return false;
     } else if (this.state.parent_participation.length < 1) { 
       Alert.alert("Must enter parent participation required");
-      return false;
     } else if (this.state.assistant.length < 1) { 
       Alert.alert("Must enter assistant provided");
-      return false;
     } else if (this.state.phone.length < 1) { 
       Alert.alert("Must enter phone number to call for accessibility questions");
-      return false;
-    } else if (this.start_age < 0) { 
+    } else if (this.state.start_age < 0) { 
       Alert.alert("Must enter youngest age");
-      return false;
-    } else if (this.end_age < 0) { 
+    } else if (this.state.end_age < 0) { 
       Alert.alert("Must enter oldest age");
-      return false;
-    } else if (this.end_age < this.start_age) { 
+    } else if (this.state.end_age < this.state.start_age) { 
       Alert.alert("Oldest age must be older than youngest age");
-      return false;
     } else { 
-      return true;
+      this.onSubmitButtonPressed(); 
     }
     
   }
@@ -202,17 +183,22 @@ showTimePicker = async (stateKey, options) => {
   render() {
     return (
       <View style={styles.outerApp}>
+        <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>
+         <Button 
+           onPress={() => this._onBack()}
+           title="Back"
+           color="darkgray"
+           accessibilityLabel="Back"
+        />
+        </View>
         <View style={styles.headerView} > 
-          <TouchableHighlight onPress={ () => this._onBack() }>
-            <Text style={styles.backButton}> Back </Text>
-          </TouchableHighlight>
           <Text style={styles.titleText}>
             Enter an Activity
           </Text>
         </View>
         <ScrollView style={styles.container}>
-          <Text style ={styles.itemText}>
-            Note: fields marked with (*) are required
+          <Text style ={{fontSize: 18, textAlign:'center', fontFamily: 'serif'}}>
+            Fill in the following data in order to submit an event to our database. Note: fields marked with (*) are required
           </Text>
           <Text style={styles.headerText}>
             *Activity Name:
@@ -443,7 +429,8 @@ showTimePicker = async (stateKey, options) => {
           onSelect={(i,v) =>this.setState({childcare : this.yesNo(v)}) }
         />
         <Button
-          onPress={this.onSubmitButtonPressed.bind(this)}
+          onPress={()=> {this.check_submission()}}
+          color="purple"
           title="Submit"
           accessibilityLabel="Submit"
         />
@@ -461,7 +448,6 @@ const styles = StyleSheet.create({
    outerApp: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'center',
     backgroundColor: 'green',
   },
   titleText:{
@@ -469,6 +455,8 @@ const styles = StyleSheet.create({
     fontSize: 32, 
     color:'white',
     fontFamily: 'serif',
+    textAlign: 'center'
+
   },
   headerText: { 
     fontSize: 27,
