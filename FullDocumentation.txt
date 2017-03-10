@@ -15,7 +15,7 @@ Open a command line and cd into the folder ActoKidsApp/ActoKids
 Run    npm install   and   react-native start
 Leave that open and open a command line and cd into the folder ActoKidsApp/server/activity-server 
 Run psql -d “name_of_your_database” -f create_activity_prod_db.sql which is a script that creates and populates the database with sample activity entries. Then run npm start    to start the server
-Open up one last command line and cd into ActoKidsApp/ActoKids  and run react-native start-android. This should fetch the JavaScripts and run the app. 
+Open up one last command line and cd into ActoKidsApp/ActoKids  and run react-native start-android. This should fetch the JavaScripts and run the app. The relevant javascripts are: DetailsPage.js, EnterEvent.js, FilterPage.js, HomePage.js, SearchPage.js, and index.android.js. The index.ios.js should be developed in future iterations to build an iOS app. 
 Usage
 Currently, there are three main functions that the application supports: finding all activities, filtering all activities based on one’s needs, and entering an activity to the database.
 Finding all activities
