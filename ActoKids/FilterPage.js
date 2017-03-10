@@ -1,3 +1,7 @@
+/**
+ * Displays the available filters and allows the user to submit filters to filter 
+ * events displayed
+ */
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -12,7 +16,6 @@ import {
   View,
   DatePickerAndroid
 } from 'react-native';
-//import CheckBox from 'react-native-check-box';
 import ModalDropdown from 'react-native-modal-dropdown'
 
 export default class FilterPage extends Component {
@@ -44,12 +47,14 @@ export default class FilterPage extends Component {
     }
   };
 
+//brings user back to the search page with only events that match the filters applied
   _navigateSearch(info){
     this.props.navigator.push({title: 'Search Page', index: 2, 
     passProps : { data: info.data }
     })
   }
 
+//finds the events that match the filters
  get_events() {
     var body_dic = {}
     if (typeof this.state.activity_types !== 'undefined')
@@ -78,7 +83,7 @@ export default class FilterPage extends Component {
       // } )
       .done();
   }
-
+//converts 'yes'/'no' text to boolean values
    yesNo(v) { 
     if(v == 'Yes') { 
       return true;
@@ -86,11 +91,11 @@ export default class FilterPage extends Component {
       return false;
     }
   }
-  
+  //brings user back to search page
   _onBack () { 
     this.props.navigator.pop();
   }
-
+//displays the page
   render() {
     return (   
     <View style={styles.outerApp}>  

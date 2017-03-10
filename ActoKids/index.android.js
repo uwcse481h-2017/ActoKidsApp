@@ -1,3 +1,6 @@
+/**Describes the different pages the app can have and defines
+ * navigation through the app, also sets up the initial page
+ */
 import React, { Component } from 'react';
 import { AppRegistry, Navigator } from 'react-native';
 

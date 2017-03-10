@@ -1,3 +1,4 @@
+/**Page for entering an event into the database */
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -30,6 +31,7 @@ export default class EnterEvent extends Component {
     }
 
   }
+  //Displays date picker
 showDatePicker = async (stateKey, options) => {
     try {
       var newState = {};
@@ -46,7 +48,7 @@ showDatePicker = async (stateKey, options) => {
       console.warn(`Error in example '${stateKey}': `, message);
     }
   };
-
+//Displays time picker
 showTimePicker = async (stateKey, options) => {
     try {
       const {action, minute, hour} = await TimePickerAndroid.open(options);
@@ -63,7 +65,7 @@ showTimePicker = async (stateKey, options) => {
       console.warn(`Error in example '${stateKey}': `, message);
     }
   };
-
+//sends a request to insert the event into the database.
   onSubmitButtonPressed() { 
     var startmin = this.state.startHour + this.state.startMinute / 60.0;
     var endmin = this.state.endHour + this.state.endMinute/60.0;
@@ -114,7 +116,7 @@ showTimePicker = async (stateKey, options) => {
       this._navigate()
     
 }
-
+//converts yes/no string to boolean value
    yesNo(v) { 
      if(v == 'Yes') { 
        return true;
@@ -122,15 +124,15 @@ showTimePicker = async (stateKey, options) => {
        return false;
      }
    }
-
+//brings you to home page after a submit
    _navigate (){
     this.props.navigator.push({title: 'Home Screen', index: 0})
   }
-
+//brings you back to home page without entering an event
   _onBack () { 
     this.props.navigator.pop();
   }
-
+//checks that the submission is valid 
   check_submission() { 
     if(this.state.ActivityName.length < 1) { 
       Alert.alert("Must enter activity name");
@@ -179,7 +181,7 @@ showTimePicker = async (stateKey, options) => {
     }
     
   }
-
+//displays event page
   render() {
     return (
       <View style={styles.outerApp}>

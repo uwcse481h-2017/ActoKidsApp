@@ -1,7 +1,5 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
+ * This page displays all details about an event
  */
 
 import React, { Component } from 'react';
@@ -16,10 +14,7 @@ import {
   TouchableHighlight,
   Navigator,
   View
-} from 'react-native';
-//import Filter from './filter';
-///import events from './events.json';
- //import SearchBar from 'react-native-searchbar'; 
+} from 'react-native'; 
 
 
 export default class DetailsPage extends Component {
@@ -29,12 +24,15 @@ export default class DetailsPage extends Component {
       this.state = {id: 1, text: '', dat: dat, months:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']};
     }
 
+
   _navigate (){
       this.props.navigator.push({title: 'Details Page', index: 4})
   }
+  //Brings user back to the search page
   _onBack () { 
     this.props.navigator.pop();
   }
+  //displays boolean value as text "yes or no" 
   _bool_to_text(val){
     if(val==true) { 
       return 'Yes';
@@ -45,6 +43,7 @@ export default class DetailsPage extends Component {
     }
   }
 
+//formats the time of the event
   _get_time(val) { 
     var time = (val+"").replace("(", "").replace(")","").replace("[","").replace("]","");
     var arr = time.split(",");
@@ -62,6 +61,7 @@ export default class DetailsPage extends Component {
     return start[0] + ":" + startMin.substr(0,2) + "-" + end[0]+":"+endMin.substr(0,2); 
   }
 
+//displays the page
   render() {
     return (     
     <View style={styles.outerApp}>

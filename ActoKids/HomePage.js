@@ -1,3 +1,4 @@
+/**Home page for our app */
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -20,17 +21,17 @@ export default class HomePage extends Component {
         dataSource: null
       } 
   }
-
+//brings user to search page
 _navigateSearch(info){
   this.props.navigator.push({title: 'Search Page', index: 2, 
     passProps : { data: info.data }
   })
 }
-
+//brings user to enter an event 
 _navigateEvent (){
   this.props.navigator.push({title: 'Add Event', index: 1})
 }
-
+//retrieves all event to pass into search page display
 get_events() { 
   var url = 'http://10.0.2.2:3000/api/activities/getAllActivities'
      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -44,7 +45,7 @@ get_events() {
           console.error(error);
         });
 }
-
+//displays search page
   render() {
     return (     
     <View style={styles.container}>

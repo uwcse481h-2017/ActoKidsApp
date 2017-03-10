@@ -1,3 +1,7 @@
+/**Displays a list of events
+ * If filters have been applied, it only displays events that match the filter
+ * If filters have not been applied, it displays all events.
+ */
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -21,18 +25,20 @@ export default class HomePage extends Component {
       super(props);
       this.state = {id: 1, text: '', dataSource: ds.cloneWithRows(obj)};
     }
-
+//opens details page about the activity selected
    _onSelect(data) { 
       this.props.navigator.push({title: 'Details Page', index: 4, 
       passProps : { data: data}})  
   }
+  //opens filter page so user can filter out activities
   _navigate (){
       this.props.navigator.push({title: 'Filter Page', index: 3})
   }
+  //brings user back to previous page (either home page or filter page)
   _onBack () { 
     this.props.navigator.pop();
   }
-
+//displays page
   render() {
     return (     
      <View style={styles.outerApp}>  
