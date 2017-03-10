@@ -1,0 +1,124 @@
+Actokids
+
+Problem
+How can we help children with disabilities and their parents find activities that they can participate in within their community?
+Installation
+Start by downloading react-native and android studio according to this link. https://facebook.github.io/react-native/docs/getting-started.html
+Download the appropriate version of postgresql for your computer from https://www.postgresql.org/download/  Make sure to get pgAdmin to run it with(if you want more GUI).
+Set up a database in there with whatever name you wish, using these instructions. http://stackoverflow.com/questions/8200917/postgresql-create-a-new-db-through-pgadmin-ui
+You may need to create a role for your computer username
+ Clone the git repository from https://github.com/uwcse481h-2017/ActoKidsApp/tree/dev --the dev branch is our app.
+Download Android Studio. https://developer.android.com/studio/index.html. 
+Open Android Studio and open the AVD Manager. Run an emulator (by pressing the green play button). You can also download a different “phone” emulator if you want.
+You may also have to go to BIOS to give emulator permissions.
+Open a command line and cd into the folder ActoKidsApp/ActoKids 
+Run    npm install   and   react-native start
+Leave that open and open a command line and cd into the folder ActoKidsApp/server/activity-server 
+Run psql -d “name_of_your_database” -f create_activity_prod_db.sql which is a script that creates and populates the database with sample activity entries. Then run npm start    to start the server
+Open up one last command line and cd into ActoKidsApp/ActoKids  and run react-native start-android. This should fetch the JavaScripts and run the app. 
+Usage
+Currently, there are three main functions that the application supports: finding all activities, filtering all activities based on one’s needs, and entering an activity to the database.
+Finding all activities
+This operation happens either when the user initially looks for activities to participate in or when the user tries to filter activities without any filter options picked. This operation displays activities as a list and whenever the user clicks an activity, it directs the user to the page where it has a more detailed information about the clicked activity. 
+Filtering activities
+This operation happens after clicking the filter button on an application. It asks for possible filters that the user might be looking for. Current version contains filters for activity type, disability type, date, maximum cost, and whether the place is wheelchair accessible or not (the later version will definitely contain other filters that will help users to find their needs). Once the user selects filters based on their needs, the application will find activities that meet the requirements and display them as a list. Similar to finding all activities, whenever the user clicks an activity, it directs the user to the page where it contains a more detailed information about the clicked event.
+Entering a new activity
+Unlike previous two functions, this is a tool for an activity organizer to input their events to the system. Once they input all necessary information, the application will insert the corresponding entry if it meets requirements. Currently, we ask the organizer to put activity name, date, time, cost, address(street name, city, state, country, zip code), phone number, descriptions, activity type, disability type, target age range, whether a parent has to participate or not, whether there is going to be some assistants or not, whether the place is wheelchair accessible or not, and whether there exists a wheelchair accessible restroom or not. There are other entries, such as whether siblings can participate or not, however these are not required currently. 
+Developer decisions
+Database
+Activity database
+When searching for an activity in general, we do not know specific entries that we are searching for. Also, we would like to be able to sort the activities based on desired filters. Therefore, a relational database is better than a non relational database for our needs. Among different possible options for a relational database, we were debating between MySQL and PostgreSQL. They both would have worked for the purpose of this application. However, we are currently using PostgreSQL because it is rich in different types it supports for the entries and it has complete support for reliable transactions (according to the ACID properties).
+Organization database(TODO)
+The purpose of this database is to store more “static” data of organizers so that they do not have to type in its static information all the time. We are thinking of storing this in a PostgreSQL database as well, but have not made any final decisions on this.
+Comments database(TODO)
+The purpose of this database is to store comments related to a particular organization. It is possible that the organizations do not update their information, post incorrect information, or inaccurate information about the place/event. This information is very critical to the user and we would like to collect this data. Currently, we are thinking of this data using non relational database because we will know which organizations we are looking for when we are searching and a key-value pair database can optimize this functionality. 
+Database entries
+Activity database
+activity_name(text)
+Stores name of the activity.
+dates(date)
+Stores a date that the activity will be held.
+Currently stores a single date. Yet, the next version can use advanced type such as daterange.
+time_of_day(numrange)
+Stores the number that represents the start time and end time. Reason why we use numrange to store time is to perform the time filter faster.
+For example, the entry (9.5,14.33] will represent the activity happens from 9:30AM to 2.20PM (9:30AM exclusive and 2:20PM inclusive)
+cost(money)
+Stores the cost to join the activity.
+street_name(text)
+Stores the street address that an activity will be held.
+city(text)
+Stores the city name that an activity will be held.
+state(text)
+Stores the state name that an activity will be held.
+country(text)
+Stores the country name that an activity will be held.
+zip_code(integer)
+Stores the zip code that an activity will be held.
+phone_number(text)
+Stores a phone number so that participants can contact the activity organizer.
+descriptions(text)
+Stores a general description for the event.
+wheelchair_accessible(boolean)
+Stores whether or not the place is wheelchair accessible.
+activity_type(activity_options)
+Stores the type of an activity.
+Current version contains 'Outdoors&Nature', 'Sports', 'Zoo', 'Music', 'Art', 'Camps', 'Museum' and  'Others' as an option with default value as ‘Others’. It will be possible to add more as needed.
+disability_type(disability_options)
+Stores the target disability type for the activity.
+Current version supports 'Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory', 'Others' as an option. It will be possible to add more as needed.
+age_range(int4range)
+Stores targeted age range for this activity
+For example, (3, 10] represents that this activity is created for an age from 4 to 10 because 3 is exclusive in here.
+We currently limit the maximum age to 24 because this application is made for storing activities for children with disabilities. Yet, changing this behavior won’t be that difficult. 
+parent_participation_required(boolean)
+Stores whether or not a parent is required to participate in the activity 
+assistant_provided(boolean)
+Stores whether or not an assistant is provided.
+disability_restrooms_available(boolean)
+Stores whether or not disability restrooms are available.
+equipment_provided(text) (optional)
+Stores equipments provided by the organizers. 
+sibling_participation(boolean) (optional)
+Stores whether or not siblings can participate.
+kids_to_staff_ratio(real) (optional)
+Stores a ratio that represents kids and staff.
+For example, 1.5 will represent there will be 1 staff for every 1.5 children.
+asl_interpreter_available(boolean) (optional)
+Stores whether or not asl interpreter is available.
+closed_circuit_hearing_loop_available(boolean) (optional)
+Stores whether or not closed circuit hearing loop is available.
+additional_charge(boolean) (optional)
+Stores whether or not there is going to be an additional charge 
+accomodate_service_animals(boolean) (optional)
+Stores whether or not a participant can accommodate service animals.
+onsite_childcare(boolean) (optional)
+Stores whether or not onsite childcare will be provided.
+
+Organization database(TODO)
+We have not come up with solid design for this database.
+Comments database(TODO)
+Key will be name of the organization
+Value will be comments about the organization
+Application platform
+After some foundations about the databases, we had to make decisions about how we are going to display data that we collected to the users. Because many people use a smartphone and the amount of time people spend on their cellphone is vast as well as the user can get notification very quickly, we decided to make a cellphone application. After making this decisions, there were many other possible decisions we had to make. Some options were focusing on making either native Android or IOS application, hybrid application or cross platform native applications. Because we want this application to be accessible to people regardless of their cell phone types, we decided to make cross platform applications. There were different tools that build cross platform applications. Yet, among different tools, such as cordova, xamarin, or react-native, we decided to use react native. React native builds a native application which brings both performance and better user experience, so that was the best option. Also, react native seems to have better reputation among developers and is growing faster. 
+Connecting databases with application
+Our initial plan was to use node modules that already exist to connect the PostgreSQL database and our application. However, there were compatibility issues using node modules. Thus, we decided to make a server using javascript so that whenever we do HTTP request, the server communicates with an already populated PostgreSQL database to perform any operations that have been requested. 
+Scraper
+In order to reduce the amount of time that organizers have to spend on creating an activity, we decided to create a scraper that knows how to gather information given some urls. It is possible to make a scraper that is specialized to scrape a certain webpage. However, we wanted to build a scraper that gathers information on shared platforms, such as Facebook Events or Google Calendar. The current version of our scraper gathers information about events on Facebook given a valid Facebook Graph API token page ID that contains events. Currently, the information has to follow a certain format in order to be scraped and put in the database.
+Future work
+Databases & entries
+The database has to be deployed on AWS or another relevant cloud service.
+Activity database
+There exists an initial design for this database; yet, it definitely needs modifications such as changing the date field to daterange and separating the phone number to be stored in an organizer database. Also, more types for activity and disability could be added as needed.  
+Organizer database
+As of now, we are not linking the address information tied to organizer database because it could be highly likely that activities can happen at a different location. Therefore, there won’t be that many fields in this database. More concrete design for this database is required as discussed in development decisions.
+Comment database
+Similar to organizer, only thing that we have decided for this database is that it should be a non-relational database. However, more concrete design for this database is required as discussed in development decisions.
+Application
+There are many things needs to happen. We definitely want to implement filters for location and date.This will help the end users to find activities based on a location that they are living and a possible date they want to join an activity. We also want a search function that let users to search for an organizer or an activity. Another thing needs to be added is a comment page for organizer. Moreover, we want to be able to store images of activities as well as places where a particular activity happens. Furthermore, there are many UI/UX improvement needs to happen because current version is just testing the core functionalities. Log-in function is another feature that needs to be added.
+Connection with database and application 
+It could be possible to change a way that is been done. However, if HTTP requests seems to be reasonable things to do, there should be more queries added as needed. Also, everything is tested locally at this point, so the server needs to be populated in order to be useable.
+Scraper 
+There are many things needs to happen here as well. The system that alerts organizers that there are missing entries if any needs to be created. Also, natural language processing needs to be implemented so that organizers do not have to follow a specific format.
+
+
